@@ -43,6 +43,8 @@ class Player:
                     i = int(input("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
                 except:
                     i=0
+                if i==50000:
+                    exit()
                 if i>=1 and i<=6:
                     break
         else:
@@ -173,12 +175,14 @@ board_window.show()
 while 1:
     # 表示を更新
     #status_window.update_display(players)
+    board_window.drawPlayer()
     turn(p1)
     if p1.win != 0:
         winner = p1.name
         break
     # 表示を更新
     #status_window.update_display(players)
+    board_window.drawPlayer()
     turn(p2)
     if p2.win != 0:
         winner = p2.name

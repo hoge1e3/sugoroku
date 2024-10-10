@@ -12,6 +12,11 @@ def boardLen(start):
         c+=1
 W=800
 H=400
+class GCell:
+    def __init__(self, cell, players, source):
+        self.cell=cell
+        self.players=players
+        self.source=source
 class BoardWindow:
     def __init__(self,start,players):
         self.start=start
@@ -19,6 +24,7 @@ class BoardWindow:
         self.window = tk.Tk()
         self.window.title("Board Status")
         self.window.geometry(f"{W}x{H}")
+        self.gcells=[]
     def show(self):
         start=self.start
         n=boardLen(start)
@@ -35,17 +41,25 @@ class BoardWindow:
             x-=1
             self.showCell(s, x, y)
             s=s.next
-
+        self.drawPlayer()
+    def drawPlayer(self):
+        for c in self.gcells:
+            c.players["text"]=""
+            for p in self.players:
+                if c.cell==p.cell:
+                    c.players["text"]+=p.name
     def showCell(self, cell, x,y):
         text=getsource(type(cell))
-        cell=tk.Frame(self.window, borderwidth=1, relief=tk.SOLID )
-        source=tk.Label(cell, text=text, font=("Arial", 10),
+        gcell=tk.Frame(self.window, borderwidth=1, relief=tk.SOLID )
+        source=tk.Label(gcell, text=text, font=("Arial", 10),
                        borderwidth=1, relief=tk.SOLID , justify="left")
         source.grid(row=0,column=0)
-        players=tk.Label(cell, text="players", font=("Arial", 10),)
+        players=tk.Label(gcell, text="players", font=("Arial", 10),)
         players.grid(row=1,column=0)
-        cell.grid(row=y, column=x)
-        return cell
+        gcell.grid(row=y, column=x)
+        gc=GCell(cell, players, source)
+        self.gcells.append(gc)
+        return gc
 class PlayerStatusWindow:
     def __init__(self):
         self.window = tk.Tk()
