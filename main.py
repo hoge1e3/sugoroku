@@ -17,7 +17,7 @@ class Player:
         self.name = name
         self.cell = cell
         self.point = 0
-        self.other=players
+        self.others =players
         self.win = 0
         self.dice = 1
         self.x = 0
@@ -38,7 +38,13 @@ class Player:
     def cast_dice(self):
         # マニュアルモードの処理
         if self.human:
-            i = int(input("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
+            while 1:
+                try:
+                    i = int(input("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
+                except:
+                    i=0
+                if i>=1 and i<=6:
+                    break
         else:
             i = random.randint(1, 6)
             print("サイコロを振って{}が出ました".format(i))

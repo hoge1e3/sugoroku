@@ -74,151 +74,115 @@ class MulCell(Cell):
         elif self.field == "y":
             p.y *= self.value
 
-
-
-
 class GateCell1(Cell):
-    def __init__(self):
-        super().__init__()
-
-    def __str__(self):
-        return "{}番目のGateCell1".format(self.number)
-
     def stop(self, player):#マスに止まったとき、「通り過ぎたとき」になる。
         if player.point>=12 or player.point<=-12:
             player.win = 1
         else:
             player.point-=1
-    def over(self, player):#通り過ぎたとき
-        pass
 
 
 class GateCell2(Cell):
-    def __init__(self):
-        super().__init__()
-
-    def __str__(self):
-        return "{}番目のGateCell2".format(self.number)
-
     def stop(self, player):#マスに止まったとき、「通り過ぎたとき」になる。
         if player.point%2==1:
             player.win=1
         else:
             pass
-    def over(self, player):#通り過ぎたとき
-        pass
 
 
 class GateCell3(Cell):
-    def __init__(self):
-        super().__init__()
-
-    def __str__(self):
-        return "{}番目のGateCell3".format(self.number)
-
     def stop(self, player):#マスに止まったとき、「通り過ぎたとき」になる。
-
         player.win=1
 
-    def over(self, player):#通り過ぎた時
-        pass
+
+
+class GateCell4(Cell):
+    def stop(self, player):
+        player.win = 1
+
+
+class GateCell5(Cell):
+    def stop(self, player):
+        player.win = 1
+
+class GateCell6(Cell):
+    def stop(self, player):
+        if player.point>10:
+            player.win=1
+        else:
+            player.x+=1
+
 
 class cell1(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point+=1
-    def over(self, player):
-        pass
+
 
 class cell2(Cell):
-    def __init__(self):
-        super().__init__()
+
     def stop(self, player):
         player.point-=2
-    def over(self, player):
-        pass
+
 
 class cell3(Cell):
-    def __init__(self):
-        super().__init__()
+
     def stop(self, player):
         player.point=3
-    def over(self, player):
-        pass
+
 
 class cell4(Cell):
-    def __init__(self):
-        super().__init__()
+
     def stop(self, player):
         player.point+=3
-    def over(self, player):
-        pass
+
 class cell5(Cell):
-    def __init__(self):
-        super().__init__()
+
     def stop(self, player):
         player.point-=1
-    def over(self, player):
-        pass
+
 class cell6(Cell):
-    def __init__(self):
-        super().__init__()
+
     def stop(self, player):
         player.point=2
-    def over(self, player):
-        pass
+
 class cell7(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point-=3
-    def over(self, player):
-        pass
+
 class cell8(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point+=-2
-    def over(self, player):
-        pass
+
 class cell9(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point-=-2
-    def over(self, player):
-        pass
+
 class cell10(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point+=-2
-    def over(self, player):
-        pass
+
 class cell11(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point+=2
-    def over(self, player):
-        pass
+
 class cell12(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
         player.point-=-1
-    def over(self, player):
-        pass
+
 class cell13(Cell):
-    def __init__(self):
-        super().__init__()
     def stop(self, player):
-        if player.input_YN("宝箱があります開けますか？")=="y":  #"y","n","!="
+        if player.input_YN("y/n")=="y":
             print("罠でした")
             player.point-=1
         else:
             print("見なかったことにしました")
             player.point+=2
-    def over(self, player):
-        pass
+
+class cell14(Cell):
+    def stop(self,player):
+        player.x+=1
+
+class cell15(Cell):
+    def stop(self,player):
+        player.x+=1
+
