@@ -1,7 +1,7 @@
 import sys
 import random
-import gui
 
+import threading
 from time import sleep
 import tkinter as tk
 from inspect import getsource
@@ -17,7 +17,7 @@ class Player:
         self.name = name
         self.cell = cell
         self.point = 0
-        self.other=players
+        self.others=players
         self.win = 0
         self.dice = 1
         self.x = 0
@@ -38,7 +38,13 @@ class Player:
     def cast_dice(self):
         # マニュアルモードの処理
         if self.human:
-            i = int(input("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
+            while 1:
+                try:
+                    i = int(input("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
+                except:
+                    i=0
+                if i>=1 and i<=6:
+                    break
         else:
             i = random.randint(1, 6)
             print("サイコロを振って{}が出ました".format(i))
@@ -73,6 +79,7 @@ def steps(p, p_step):
 def cell_by_index(cell, i):
     for j in range(i):
         cell = cell.next
+
     if cell == None:
         raise ValueError(i)
     return cell
@@ -99,8 +106,6 @@ def create_chain(cell_array):
     for i in range(1, len(cell_array)):
         cell_array[i - 1].next = cell_array[i]
     return cell_array[0]
-
-
 
 def last_cell(cell):
     while cell.next != None:
@@ -159,20 +164,52 @@ players.append(p1)
 players.append(p2)
 p1.other=p2
 p2.other=p1
-
-board_window=gui.start(start, players)
+class PlayerStatusWindow:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Player Status")
+        self.window.geometry("600x400")
+        self.font_size = 50
+        self.labels = []
+    def initialize_window(self):
+        headers = ["Name", "X", "Y", "Point"]
+        for col, header in enumerate(headers):
+            label = tk.Label(self.window, text=header, font=("Arial", self.font_size))
+            label.grid(row=0, column=col, padx=10, pady=10)
+        # プレイヤーの情報用のラベルを事前に作成
+        for row in range(1, 3):  # 2人分のプレイヤー用
+            row_labels = []
+            for col in range(4):  # 4つの列（Name, X, Y, Point)
+                label = tk.Label(self.window, text="", font=("Arial", self.font_size))
+                label.grid(row=row, column=col, padx=10, pady=10)
+                row_labels.append(label)
+            self.labels.append(row_labels)
+    def update_display(self, players):
+        for row, player in enumerate(players):
+            self.labels[row][0].config(text=player.name)
+            self.labels[row][1].config(text=str(player.x))
+            self.labels[row][2].config(text=str(player.y))
+            self.labels[row][3].config(text=str(player.point))
+    def run(self):
+        self.window.mainloop()
+status_window = PlayerStatusWindow()
+status_window.initialize_window()
+def gui_thread(status_window):
+    status_window.run()
+gui_thread_instance = threading.Thread(target=gui_thread, args=(status_window,))
+gui_thread_instance.start()
 sleep(1)
-board_window.show()
+
 
 while 1:
     # 表示を更新
-    #status_window.update_display(players)
+    status_window.update_display(players)
     turn(p1)
     if p1.win != 0:
         winner = p1.name
         break
     # 表示を更新
-    #status_window.update_display(players)
+    status_window.update_display(players)
     turn(p2)
     if p2.win != 0:
         winner = p2.name
