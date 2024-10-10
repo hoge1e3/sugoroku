@@ -75,7 +75,7 @@ class MulCell(Cell):
             p.y *= self.value
 
 class GateCell1(Cell):
-    def stop(self, player):#マスに止まったとき、「通り過ぎたとき」になる。
+    def stop(self, player):
         if player.point>=12 or player.point<=-12:
             player.win = 1
         else:
@@ -83,7 +83,7 @@ class GateCell1(Cell):
 
 
 class GateCell2(Cell):
-    def stop(self, player):#マスに止まったとき、「通り過ぎたとき」になる。
+    def stop(self, player):
         if player.point%2==1:
             player.win=1
         else:
@@ -91,7 +91,7 @@ class GateCell2(Cell):
 
 
 class GateCell3(Cell):
-    def stop(self, player):#マスに止まったとき、「通り過ぎたとき」になる。
+    def stop(self, player):
         player.win=1
 
 
