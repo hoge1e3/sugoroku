@@ -68,15 +68,16 @@ class MulCell(Cell):
     def __str__(self):
         return "{}に{}をMulする{}番目のマス".format(self.field, self.value, self.number)
 
-    def stop(self, p):#止まった時
+    def stop(self, p):
         if self.field == "x":
-            p.x *= self.value#xの値をvalueの値の分掛けた値にする
+            p.x *= self.value
         elif self.field == "y":
             p.y *= self.value
 
 class GateCell1(Cell):
     def stop(self, player):
-        if player.point>=12 or player.point<=-12:
+        if (player.point>=12 or
+                player.point<=-12):
             player.win = 1
         else:
             player.point-=1
@@ -186,4 +187,11 @@ class cell15(Cell):
     def stop(self,player):
         player.others.point-=player.x
 
+class cell16(Cell):
+    def stop(self,player):
+        player.others.point-=5
+
+class cell17(Cell):
+    def stop(self, player):
+        player.point+=player.x
 
