@@ -184,5 +184,6 @@ class cell14(Cell):
 
 class cell15(Cell):
     def stop(self,player):
-        player.x+=1
+        player.others.point-=player.x
+
 
