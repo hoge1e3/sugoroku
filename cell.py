@@ -195,3 +195,13 @@ class cell17(Cell):
     def stop(self, player):
         player.point+=player.x
 
+class cell18(Cell):
+    def stop(self, player):
+        player.point-=player.x
+class cell19(Cell):
+    def stop(self, player):
+        player.others.point+=player.x
+
+class cell20(Cell):
+    def stop(self, player):
+        player.others.x-=4
