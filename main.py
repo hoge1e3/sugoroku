@@ -1,5 +1,6 @@
 import sys
 import random
+import threading
 import gui
 
 from time import sleep
@@ -48,6 +49,7 @@ class Player:
                 if i>=1 and i<=6:
                     break
         else:
+            sleep(1)
             i = random.randint(1, 6)
             print("サイコロを振って{}が出ました".format(i))
         return i
@@ -168,28 +170,32 @@ players.append(p2)
 p1.other=p2
 p2.other=p1
 
+
+def main():
+    global turn_count
+    while 1:
+        # 表示を更新
+        #status_window.update_display(players)
+        board_window.drawPlayer()
+        turn(p1)
+        if p1.win != 0:
+            winner = p1.name
+            break
+        # 表示を更新
+        #status_window.update_display(players)
+        board_window.drawPlayer()
+        turn(p2)
+        if p2.win != 0:
+            winner = p2.name
+            break
+        turn_count += 1
+        print("turn:", turn_count)
+        print("Loop:",loop)
+
+    print(winner, " is win")
+    exit()
 board_window=gui.start(start, players)
-sleep(1)
 board_window.show()
-
-while 1:
-    # 表示を更新
-    #status_window.update_display(players)
-    board_window.drawPlayer()
-    turn(p1)
-    if p1.win != 0:
-        winner = p1.name
-        break
-    # 表示を更新
-    #status_window.update_display(players)
-    board_window.drawPlayer()
-    turn(p2)
-    if p2.win != 0:
-        winner = p2.name
-        break
-    turn_count += 1
-    print("turn:", turn_count)
-    print("Loop:",loop)
-
-print(winner, " is win")
-exit()
+gui_thread_instance = threading.Thread(target=main, args=())
+gui_thread_instance.start()
+board_window.run()

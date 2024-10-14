@@ -28,6 +28,12 @@ class BoardWindow:
     def show(self):
         start=self.start
         n=boardLen(start)
+        self.main=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID )
+        self.main.grid(row=0,column=0)
+        self.status=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
+        self.status.grid(row=1,column=0)
+        self.message=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
+        self.message.grid(row=2,column=0)
         s=start
         x=0
         y=0
@@ -48,9 +54,12 @@ class BoardWindow:
             for p in self.players:
                 if c.cell==p.cell:
                     c.players["text"]+=p.name
+        self.message["text"]=""
+        for p in self.players:
+            self.message["text"]+=f" [{p.name} point={p.point} x={p.x} y={p.y}] "
     def showCell(self, cell, x,y):
         text=getsource(type(cell))
-        gcell=tk.Frame(self.window, borderwidth=1, relief=tk.SOLID )
+        gcell=tk.Frame(self.main, borderwidth=1, relief=tk.SOLID )
         source=tk.Label(gcell, text=text, font=("Arial", 10),
                        borderwidth=1, relief=tk.SOLID , justify="left")
         source.grid(row=0,column=0)
@@ -60,6 +69,8 @@ class BoardWindow:
         gc=GCell(cell, players, source)
         self.gcells.append(gc)
         return gc
+    def run(self):
+        self.window.mainloop()
 class PlayerStatusWindow:
     def __init__(self):
         self.window = tk.Tk()
@@ -94,6 +105,6 @@ def gui_thread(window):
     window.mainloop()
 def start(start, players):
     board_window=BoardWindow(start, players)
-    gui_thread_instance = threading.Thread(target=gui_thread, args=(board_window.window,))
-    gui_thread_instance.start()
+    #gui_thread_instance = threading.Thread(target=gui_thread, args=(board_window.window,))
+    #gui_thread_instance.start()
     return board_window
