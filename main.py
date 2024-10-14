@@ -30,6 +30,8 @@ class Player:
     def step(self):
         if self.cell.next == None:
             raise ValueError(self.cell.number)
+        board_window.drawPlayer()
+        sleep(0.2)
         self.cell = self.cell.next
     def add_point(self, point):
         self.point += point
@@ -193,6 +195,7 @@ def main():
         print("Loop:",loop)
 
     print(winner, " is win")
+    board_window.show()
     exit()
 board_window=gui.start(start, players)
 board_window.show()
