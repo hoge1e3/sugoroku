@@ -2,14 +2,6 @@ import tkinter as tk
 from inspect import getsource
 import threading
 
-def boardLen(start):
-    c=1
-    s=start
-    while True:
-        s=s.next
-        if s==start:
-            return c
-        c+=1
 W=800
 H=400
 class GCell:
@@ -18,35 +10,26 @@ class GCell:
         self.players=players
         self.source=source
 class BoardWindow:
-    def __init__(self,start,players):
-        self.start=start
+    def __init__(self, map, players):
+        self.map=map
         self.players=players
         self.window = tk.Tk()
         self.window.title("Board Status")
         self.window.geometry(f"{W}x{H}")
         self.gcells=[]
     def show(self):
-        start=self.start
-        n=boardLen(start)
         self.main=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID )
         self.main.grid(row=0,column=0)
         self.status=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
         self.status.grid(row=1,column=0)
         self.message=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
         self.message.grid(row=2,column=0)
-        s=start
-        x=0
-        y=0
-        h=(n+1)//2
-        for i in range(h):
-            self.showCell(s, x, y)
-            x+=1
-            s=s.next
-        y+=1
-        for i in range(n-h):
-            x-=1
-            self.showCell(s, x, y)
-            s=s.next
+        for y in range(len(self.map)):
+            row=self.map[y]
+            for x in range(len(row)):
+                cell=row[x]
+                if not cell: continue
+                self.showCell(cell, x, y)
         self.drawPlayer()
     def drawPlayer(self):
         for c in self.gcells:
@@ -103,8 +86,6 @@ class PlayerStatusWindow:
 #status_window.initialize_window()
 def gui_thread(window):
     window.mainloop()
-def start(start, players):
-    board_window=BoardWindow(start, players)
-    #gui_thread_instance = threading.Thread(target=gui_thread, args=(board_window.window,))
-    #gui_thread_instance.start()
+def start(map, players):
+    board_window=BoardWindow(map, players)
     return board_window

@@ -12,11 +12,29 @@ GOAL_POINT=1
 loop=0
 mode=[0,1,2]
 
+dirs=[(1,0),(0,1),(-1,0),(0,-1)]
+def dir2name(dir):
+    return "?u?l?r?d?"[dir[0]+dir[1]*3+4]
+def name2dir(n):
+    return {"u":(0,-1), "d":(0,1), "l":(-1,0), "r":(1,0)}[n]
+def opposite_dir(a,b):
+    return a[0]==-b[0] and a[1]==-b[1]
+def add_dir(a,b):
+    return (a[0]+b[0], a[1]+b[1])
+def cell_at(pos):
+    (x,y)=pos
+    if not 0<=y<len(map):return None
+    row=map[y]
+    if not 0<=x<len(row):return None
+    return row[x]
+        
 # プレイヤーのステータス
 class Player:
-    def __init__(self, name, cell,players,humans):
+    def __init__(self, name, pos,players,humans):
         self.name = name
-        self.cell = cell
+        #self.cell = cell
+        self.pos=pos
+        self.dir=(1,0)
         self.point = 0
         self.others =players
         self.win = 0
@@ -27,12 +45,37 @@ class Player:
 
     def __str__(self):
         return self.name
+    def dir_candidates(self):
+        cands=[]
+        for d in dirs:
+            if opposite_dir(self.dir, d): continue
+            n=add_dir(self.pos, d)
+            cell=cell_at(n)
+            if not cell: continue
+            cands.append(d)
+        return cands
+    def select_dir(self):
+        candidates=self.dir_candidates()
+        if len(candidates)==1:
+            return candidates[0]
+        if not self.human:
+            return candidates[random.randint(0,len(candidates)-1)]
+        candNames=list(dir2name(c) for c in candidates)
+        while True:
+            d=input("どの方向に行きますか:("+"/".join(candNames)+")?")
+            if d=="50000":
+                exit()
+            if d in candNames:
+                return name2dir(d)
+    
     def step(self):
-        if self.cell.next == None:
-            raise ValueError(self.cell.number)
+        self.dir=self.select_dir()
+        self.pos=add_dir(self.pos, self.dir)
         board_window.drawPlayer()
         sleep(0.2)
-        self.cell = self.cell.next
+    @property
+    def cell(self):
+        return cell_at(self.pos)
     def add_point(self, point):
         self.point += point
         if self.point >= GOAL_POINT:
@@ -81,15 +124,6 @@ def steps(p, p_step):
     p.cell.stop(p)
 
 
-# cellからi番目のcellを探す
-def cell_by_index(cell, i):
-    for j in range(i):
-        cell = cell.next
-    if cell == None:
-        raise ValueError(i)
-    return cell
-
-
 # ターン処理
 def turn(p):
     print(" ")
@@ -106,20 +140,6 @@ def turn(p):
     print(p.name, "step:", p_step)
 
 
-
-def create_chain(cell_array):
-    for i in range(1, len(cell_array)):
-        cell_array[i - 1].next = cell_array[i]
-    return cell_array[0]
-
-
-
-def last_cell(cell):
-    while cell.next != None:
-        cell = cell.next
-    return cell
-
-# １～６と決まってるから引数なし
 
 # 手動にしたいならmanualを実行時引数に
 args = sys.argv
@@ -140,15 +160,22 @@ def selectFrom(cellClasses):
     i=random.randint(0, len(cellClasses)-1)
     return cellClasses[i]()
 
-for i in range(12):
+for i in range(13):
     main_route.append(selectFrom(normalCellClasses))
-i=random.randint(0,11)
+i=random.randint(0,12)
 main_route[i]=selectFrom(gateCellClasses)
 for i in range(len(main_route)):
     main_route[i].number=i+1
-
-start = create_chain(main_route)
-last_cell(start).next = start
+map=[
+    [0, 1, 2, 3, 4],
+    [5,-1, 6,-1, 7],
+    [8, 9,10,11,12]
+]
+map=list( 
+    list(main_route[i] if i>=0 else None for i in row) 
+    for row in map)
+#print(map)
+#exit()
 
 def addstr(c, val):
     def s(self):
@@ -165,13 +192,14 @@ addstrAll(gateCellClasses, 100)
 turn_count = 0
 players=[]
 humans=int(input("人数を入力してください（0~2）"))
-p1 = Player("p1", start,players, humans>=1)
-p2 = Player("p2", start,players, humans>=2)
+p1 = Player("p1", (0,0), players, humans>=1)
+p2 = Player("p2", (0,0), players, humans>=2)
 players.append(p1)
 players.append(p2)
 p1.other=p2
 p2.other=p1
-
+#print(p1.cell)
+#exit()
 
 def main():
     global turn_count
@@ -197,7 +225,7 @@ def main():
     print(winner, " is win")
     board_window.show()
     exit()
-board_window=gui.start(start, players)
+board_window=gui.start(map, players)
 board_window.show()
 gui_thread_instance = threading.Thread(target=main, args=())
 gui_thread_instance.start()

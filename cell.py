@@ -5,7 +5,6 @@ class Cell:
         global cell_ID
         cell_ID += 1
         self.number = cell_ID
-        self.next = None
     def __str__(self):
         return "{}番のマス".format(self.number)
     def stop(self, player):
