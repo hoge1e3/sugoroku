@@ -119,29 +119,24 @@ class cell1(Cell):
 
 
 class cell2(Cell):
-
     def stop(self, player):
         player.point-=2
 
 
 class cell3(Cell):
-
     def stop(self, player):
         player.point=3
 
 
 class cell4(Cell):
-
     def stop(self, player):
         player.point+=3
 
 class cell5(Cell):
-
     def stop(self, player):
         player.point-=1
 
 class cell6(Cell):
-
     def stop(self, player):
         player.point=2
 
@@ -204,3 +199,11 @@ class cell19(Cell):
 class cell20(Cell):
     def stop(self, player):
         player.others.x-=4
+
+class cell21(Cell):
+    def stop(self, player):
+        player.point+=5
+
+class cell22(Cell):
+    def stop(self,player):
+        player.x+=player.others.x
