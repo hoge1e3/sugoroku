@@ -92,11 +92,10 @@ class GateCell2(Cell):
 
 class GateCell3(Cell):
     def stop(self, player):
-        if player.point<10 and player.point%2==1:
-         player.win=1
-
-
-
+        if player.point>10 and player.point%2==1:
+            player.win=1
+        else:
+            player.point+=1
 class GateCell4(Cell):
     def stop(self, player):
         player.win = 1
@@ -121,12 +120,12 @@ class cell1(Cell):
 
 class cell2(Cell):
     def stop(self, player):
-        player.point-=2
+        player.point-=1
 
 
 class cell3(Cell):
     def stop(self, player):
-        player.point=3
+        player.point+=3
 
 
 class cell4(Cell):
@@ -139,7 +138,7 @@ class cell5(Cell):
 
 class cell6(Cell):
     def stop(self, player):
-        player.point=2
+        player.point*=2
 
 class cell7(Cell):
     def stop(self, player):
@@ -155,7 +154,7 @@ class cell9(Cell):
 
 class cell10(Cell):
     def stop(self, player):
-        player.point+=-2
+        player.point+=-3
 
 class cell11(Cell):
     def stop(self, player):
@@ -219,5 +218,5 @@ class cell24(Cell):
 
 class cell25(Cell):
     def stop(self, player):
-
+        pass
 
