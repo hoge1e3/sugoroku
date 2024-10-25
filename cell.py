@@ -208,3 +208,16 @@ class cell21(Cell):
 class cell22(Cell):
     def stop(self,player):
         player.x+=player.others.x
+
+class cell23(Cell):
+    def stop(self, player):
+        player.point+=player.others.others.x
+
+class cell24(Cell):
+    def stop(self, player):
+        player.others.x-=player.x
+
+class cell25(Cell):
+    def stop(self, player):
+
+
