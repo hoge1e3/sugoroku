@@ -2,6 +2,11 @@ import sys
 import random
 import threading
 import gui
+import time
+
+seed=int(time.time()/100)
+#seed=12798467
+random.seed(seed)
 
 from time import sleep
 import tkinter as tk
@@ -227,6 +232,7 @@ def main():
     exit()
 board_window=gui.start(map, players)
 board_window.show()
+board_window.setSeed(seed)
 gui_thread_instance = threading.Thread(target=main, args=())
 gui_thread_instance.start()
 board_window.run()

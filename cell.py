@@ -219,5 +219,4 @@ class cell24(Cell):
 
 class cell25(Cell):
     def stop(self, player):
-
-
+        pass
