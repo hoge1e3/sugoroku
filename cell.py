@@ -84,10 +84,10 @@ class GateCell1(Cell):
 
 class GateCell2(Cell):
     def stop(self, player):
-        if player.point<15:
+        if player.point>15:
             player.win=1
         else:
-            player.point*=-1
+            player.point+=-1
 
 
 class GateCell3(Cell):
@@ -99,7 +99,6 @@ class GateCell3(Cell):
 class GateCell4(Cell):
     def stop(self, player):
         player.win = 1
-
 
 class GateCell5(Cell):
     def stop(self, player):
