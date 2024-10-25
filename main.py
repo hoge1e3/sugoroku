@@ -5,7 +5,8 @@ import gui
 import time
 
 map_seed=int(time.time()/100)
-#seed=12798467
+map_seed=17298475
+#17298481
 random.seed(map_seed)
 
 from time import sleep

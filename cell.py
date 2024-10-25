@@ -166,10 +166,8 @@ class cell12(Cell):
 class cell13(Cell):
     def stop(self, player):
         if player.input_YN("y/n")=="y":
-            print("罠でした")
             player.point-=1
         else:
-            print("見なかったことにしました")
             player.point+=2
 
 class cell14(Cell):
