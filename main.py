@@ -4,9 +4,9 @@ import threading
 import gui
 import time
 
-seed=int(time.time()/100)
+map_seed=int(time.time()/100)
 #seed=12798467
-random.seed(seed)
+random.seed(map_seed)
 
 from time import sleep
 import tkinter as tk
@@ -207,6 +207,9 @@ p2.other=p1
 #exit()
 
 def main():
+    play_seed=int(time.time()/100)
+    random.seed(play_seed)
+
     global turn_count
     while 1:
         # 表示を更新
@@ -228,11 +231,12 @@ def main():
         print("Loop:",loop)
 
     print(winner, " is win")
+    print("map_seed= ", map_seed, "play_seed", play_seed)
     board_window.show()
     exit()
 board_window=gui.start(map, players)
 board_window.show()
-board_window.setSeed(seed)
+board_window.setSeed(map_seed)
 gui_thread_instance = threading.Thread(target=main, args=())
 gui_thread_instance.start()
 board_window.run()
