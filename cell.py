@@ -93,7 +93,7 @@ class GateCell2(Cell):
 
 class GateCell3(Cell):
     def stop(self, player):
-        if player.point<10 and player.point%2=1:
+        if player.point<10 and player.point%2==1:
             player.win=1
         else:
             player.point+=1
