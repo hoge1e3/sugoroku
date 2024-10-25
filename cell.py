@@ -215,4 +215,8 @@ class cell24(Cell):
 
 class cell25(Cell):
     def stop(self, player):
-        pass
+        player.point+=player.others.point
+
+class cell26(Cell):
+    def stop(self, player):
+        player.others.point-=3
