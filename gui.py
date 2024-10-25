@@ -18,12 +18,14 @@ class BoardWindow:
         self.window.geometry(f"{W}x{H}")
         self.gcells=[]
     def show(self):
-        self.main=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID )
-        self.main.grid(row=0,column=0)
+        self.seed=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
+        self.seed.grid(row=0,column=0)
+        self.main=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
+        self.main.grid(row=1,column=0)
         self.status=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
-        self.status.grid(row=1,column=0)
+        self.status.grid(row=2,column=0)
         self.message=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
-        self.message.grid(row=2,column=0)
+        self.message.grid(row=3,column=0)
         for y in range(len(self.map)):
             row=self.map[y]
             for x in range(len(row)):
@@ -31,6 +33,10 @@ class BoardWindow:
                 if not cell: continue
                 self.showCell(cell, x, y)
         self.drawPlayer()
+    def setSeed(self, val):
+        self.seed["text"]=val
+    def setStatus(self, val):
+        self.status["text"]=val
     def drawPlayer(self):
         for c in self.gcells:
             c.players["text"]=""
