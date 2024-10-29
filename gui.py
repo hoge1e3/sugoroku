@@ -1,9 +1,9 @@
 import tkinter as tk
 from inspect import getsource
 import threading
-
-W=800
-H=400
+from time import sleep
+W=1000
+H=800
 class GCell:
     def __init__(self, cell, players, source):
         self.cell=cell
@@ -17,6 +17,14 @@ class BoardWindow:
         self.window.title("Board Status")
         self.window.geometry(f"{W}x{H}")
         self.gcells=[]
+    def input(self, mesg):
+        self.setMessage(mesg)
+        self.entered=False
+        self.inputE.delete(0,tk.END)
+        while not self.entered:
+            sleep(0.1)
+        return self.inputE.get()
+
     def show(self):
         self.seed=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
         self.seed.grid(row=0,column=0)
@@ -24,8 +32,15 @@ class BoardWindow:
         self.main.grid(row=1,column=0)
         self.status=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
         self.status.grid(row=2,column=0)
-        self.message=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
-        self.message.grid(row=3,column=0)
+        self.messageInput=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
+        self.messageInput.grid(row=3,column=0)
+        self.message=tk.Label(self.messageInput, borderwidth=1, relief=tk.SOLID)
+        self.message.grid(row=0,column=0)
+        self.inputE=tk.Entry(self.messageInput)
+        self.inputE.grid(row=0,column=1)
+        def entered(e):
+            self.entered=True
+        self.inputE.bind("<Return>", entered)
         for y in range(len(self.map)):
             row=self.map[y]
             for x in range(len(row)):
@@ -35,17 +50,17 @@ class BoardWindow:
         self.drawPlayer()
     def setSeed(self, val):
         self.seed["text"]=val
-    def setStatus(self, val):
-        self.status["text"]=val
+    def setMessage(self, val):
+        self.message["text"]=val
     def drawPlayer(self):
         for c in self.gcells:
             c.players["text"]=""
             for p in self.players:
                 if c.cell==p.cell:
                     c.players["text"]+=p.name
-        self.message["text"]=""
+        self.status["text"]=""
         for p in self.players:
-            self.message["text"]+=f" [{p.name} point={p.point} x={p.x} y={p.y}] "
+            self.status["text"]+=f" [{p.name} point={p.point} x={p.x} y={p.y}] "
     def showCell(self, cell, x,y):
         text=getsource(type(cell))
         gcell=tk.Frame(self.main, borderwidth=1, relief=tk.SOLID )

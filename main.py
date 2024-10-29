@@ -69,7 +69,7 @@ class Player:
             return candidates[random.randint(0,len(candidates)-1)]
         candNames=list(dir2name(c) for c in candidates)
         while True:
-            d=input("どの方向に行きますか:("+"/".join(candNames)+")?")
+            d=input2("どの方向に行きますか:("+"/".join(candNames)+")?")
             if d=="50000":
                 exit()
             if d in candNames:
@@ -93,7 +93,7 @@ class Player:
         if self.human:
             while 1:
                 try:
-                    i = int(input("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
+                    i = int(input2("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
                 except:
                     i=0
                 if i==50000:
@@ -112,7 +112,7 @@ class Player:
             return "yn"[i]#["y","n"][i]
         else:
             while True:
-                i = input(message + "y/n")
+                i = input2(message + "y/n")
                 if i == "y" or i == "n":
                     return i
                 else:
@@ -243,6 +243,9 @@ def main():
     print("map_seed= ", map_seed, "play_seed", play_seed)
     board_window.show()
     exit()
+def input2(mesg):
+    return board_window.input(mesg)
+    #return input(mesg)
 board_window=gui.start(map, players)
 board_window.show()
 board_window.setSeed(map_seed)
