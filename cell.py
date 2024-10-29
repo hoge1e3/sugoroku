@@ -98,10 +98,12 @@ class GateCell3(Cell):
             player.point+=1
 class GateCell4(Cell):
     def stop(self, player):
-        player.win = 1
+        if player.x+player.point>100:
+            player.win = 1
 
 class GateCell5(Cell):
     def stop(self, player):
+
         player.win = 1
 
 class GateCell6(Cell):
@@ -157,7 +159,7 @@ class cell10(Cell):
 
 class cell11(Cell):
     def stop(self, player):
-        player.point+=2
+        player.point=player.other.point
 
 class cell12(Cell):
     def stop(self, player):
@@ -176,11 +178,11 @@ class cell14(Cell):
 
 class cell15(Cell):
     def stop(self,player):
-        player.others.point-=player.x
+        player.other.point-=player.x
 
 class cell16(Cell):
     def stop(self,player):
-        player.others.point-=5
+        player.other.point-=5
 
 class cell17(Cell):
     def stop(self, player):
@@ -191,11 +193,11 @@ class cell18(Cell):
         player.point-=player.x
 class cell19(Cell):
     def stop(self, player):
-        player.others.point+=player.x
+        player.other.point+=player.x
 
 class cell20(Cell):
     def stop(self, player):
-        player.others.x-=4
+        player.other.x-=4
 
 class cell21(Cell):
     def stop(self, player):
@@ -203,20 +205,20 @@ class cell21(Cell):
 
 class cell22(Cell):
     def stop(self,player):
-        player.x+=player.others.x
+        player.x+=player.other.x
 
 class cell23(Cell):
     def stop(self, player):
-        player.point+=player.others.others.x
+        player.point+=player.other.other.x
 
 class cell24(Cell):
     def stop(self, player):
-        player.others.x-=player.x
+        player.other.x-=player.x
 
 class cell25(Cell):
     def stop(self, player):
-        player.point+=player.others.point
+        player.point+=player.other.point
 
 class cell26(Cell):
     def stop(self, player):
-        player.others.point-=3
+        player.other.point-=3
