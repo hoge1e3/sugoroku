@@ -5,8 +5,9 @@ import gui
 import time
 
 map_seed=int(time.time()/100)
-map_seed=17298475
+#map_seed=17298475
 #17298481
+#17301936
 random.seed(map_seed)
 
 from time import sleep
@@ -36,13 +37,12 @@ def cell_at(pos):
         
 # プレイヤーのステータス
 class Player:
-    def __init__(self, name, pos,players,humans):
+    def __init__(self, name, pos,humans):
         self.name = name
         #self.cell = cell
         self.pos=pos
         self.dir=(1,0)
         self.point = 0
-        self.others =players
         self.win = 0
         self.dice = 1
         self.x = 0
@@ -158,16 +158,21 @@ main_route = [
 normalCellClasses=[
     cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12,cell13
 ]
-
+middleCellClasses=[
+    cell14,cell15,cell16,cell17,cell18,cell19,cell20,cell21,cell22,cell23,cell24,cell25,cell26
+]
 gateCellClasses=[
     GateCell1,GateCell2,GateCell3,
+]
+middleGateCellClasses=[
+    GateCell4,GateCell5,GateCell6
 ]
 def selectFrom(cellClasses):
     i=random.randint(0, len(cellClasses)-1)
     return cellClasses[i]()
 
 for i in range(13):
-    main_route.append(selectFrom(normalCellClasses))
+    main_route.append(selectFrom(middleCellClasses))
 i=random.randint(0,12)
 main_route[i]=selectFrom(gateCellClasses)
 for i in range(len(main_route)):
@@ -198,12 +203,14 @@ addstrAll(gateCellClasses, 100)
 turn_count = 0
 players=[]
 humans=int(input("人数を入力してください（0~2）"))
-p1 = Player("p1", (0,0), players, humans>=1)
-p2 = Player("p2", (0,0), players, humans>=2)
+p1 = Player("p1", (0,0),  humans>=1)
+p2 = Player("p2", (0,0), humans>=2)
 players.append(p1)
 players.append(p2)
 p1.other=p2
 p2.other=p1
+p1.others=[p1,p2]
+p2.others=[p2,p1]
 #print(p1.cell)
 #exit()
 
