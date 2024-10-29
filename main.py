@@ -8,6 +8,7 @@ map_seed=int(time.time()/100)
 #map_seed=17298475
 #17298481
 #17301936
+#17301950　マスが5種類
 random.seed(map_seed)
 
 from time import sleep
