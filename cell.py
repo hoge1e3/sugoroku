@@ -222,3 +222,11 @@ class cell25(Cell):
 class cell26(Cell):
     def stop(self, player):
         player.other.point-=3
+
+class cell27(Cell):
+    def stop(self, player):
+        player.other.x=player.x
+
+class cell28(Cell):
+    def stop(self, player):
+        player.other.point=player.point
