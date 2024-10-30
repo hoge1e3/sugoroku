@@ -19,8 +19,14 @@ from cell import *
 GOAL_POINT=1
 loop=0
 mode=[0,1,2]
+noSleep=False
+trial=0
+max_turns=0
 
 dirs=[(1,0),(0,1),(-1,0),(0,-1)]
+def sleep2(s):
+    if not noSleep:
+        sleep(s)
 def dir2name(dir):
     return "?u?l?r?d?"[dir[0]+dir[1]*3+4]
 def name2dir(n):
@@ -45,7 +51,6 @@ class Player:
         self.dir=(1,0)
         self.point = 0
         self.win = 0
-        self.dice = 1
         self.x = 0
         self.y = 0
         self.human=humans
@@ -79,7 +84,7 @@ class Player:
         self.dir=self.select_dir()
         self.pos=add_dir(self.pos, self.dir)
         board_window.drawPlayer()
-        sleep(0.2)
+        sleep2(0.2)
     @property
     def cell(self):
         return cell_at(self.pos)
@@ -101,7 +106,7 @@ class Player:
                 if i>=1 and i<=6:
                     break
         else:
-            sleep(1)
+            sleep2(1)
             i = random.randint(1, 6)
             print("サイコロを振って{}が出ました".format(i))
         return i
@@ -202,24 +207,43 @@ addstrAll(gateCellClasses, 100)
 
 
 turn_count = 0
-players=[]
 humans=int(input("人数を入力してください（0~2）"))
-p1 = Player("p1", (0,0),  humans>=1)
-p2 = Player("p2", (0,0), humans>=2)
-players.append(p1)
-players.append(p2)
-p1.other=p2
-p2.other=p1
-p1.others=[p1,p2]
-p2.others=[p2,p1]
-#print(p1.cell)
-#exit()
+if humans>=100:
+    noSleep=True
+    trial=humans
+    humans=0
+    max_turns=100
+players=[]
+def init_players():
+    global p1,p2,players
+    for i in range(len(players)):
+        del players[0]
+    p1 = Player("p1", (0,0), humans>=1)
+    p2 = Player("p2", (0,0), humans>=2)
+    players.append(p1)
+    players.append(p2)
+    p1.other=p2
+    p2.other=p1
+    p1.others=[p1,p2]
+    p2.others=[p2,p1]
+init_players()
 
-def main():
+def mainRept():
     play_seed=int(time.time()/100)
+    if not trial:
+        main(play_seed)
+    else:
+        sum_turn_count=0
+        for i in range(trial):
+            sum_turn_count+=main(play_seed)
+            play_seed+=100
+            init_players()
+        print("Average turn count",sum_turn_count/trial)
+    exit()
+def main(play_seed):
     random.seed(play_seed)
-
     global turn_count
+    turn_count=0
     while 1:
         # 表示を更新
         #status_window.update_display(players)
@@ -238,17 +262,19 @@ def main():
         turn_count += 1
         print("turn:", turn_count)
         print("Loop:",loop)
-
+        if max_turns and turn_count>=max_turns:
+            winner = None
+            break
     print(winner, " is win")
-    print("map_seed= ", map_seed, "play_seed", play_seed)
-    board_window.show()
-    exit()
+    print("map_seed= ", map_seed, "play_seed", play_seed, "Turn count",turn_count)
+    return turn_count
+    
 def input2(mesg):
     return board_window.input(mesg)
     #return input(mesg)
 board_window=gui.start(map, players)
 board_window.show()
 board_window.setSeed(map_seed)
-gui_thread_instance = threading.Thread(target=main, args=())
+gui_thread_instance = threading.Thread(target=mainRept, args=())
 gui_thread_instance.start()
 board_window.run()
