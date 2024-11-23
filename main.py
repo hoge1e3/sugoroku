@@ -73,6 +73,8 @@ class Player:
         if not self.human:
             return candidates[random.randint(0,len(candidates)-1)]
         candNames=list(dir2name(c) for c in candidates)
+        return name2dir(board_window.seldir(candNames))
+
         while True:
             d=input2("どの方向に行きますか:("+"/".join(candNames)+")?")
             if d=="50000":
@@ -83,7 +85,7 @@ class Player:
     def step(self):
         self.dir=self.select_dir()
         self.pos=add_dir(self.pos, self.dir)
-        board_window.drawPlayer()
+        board_window.drawPlayer(self)
         sleep2(0.2)
     @property
     def cell(self):
@@ -96,6 +98,8 @@ class Player:
     def cast_dice(self):
         # マニュアルモードの処理
         if self.human:
+            i=board_window.cast_dice()
+            return i
             while 1:
                 try:
                     i = int(input2("サイコロを振って，出た数字を入れてください({}-{})?".format(1, 6)))
@@ -125,10 +129,13 @@ class Player:
 
 # 進む処理
 def steps(p, p_step):
-    for i in range(p_step - 1):
+    for i in range(p_step,1,-1):
+        board_window.setDiceLeft(i)
         p.step()
+        board_window.setDiceLeft(i-1)
         print(p.cell.number)
         p.cell.over(p)
+    board_window.setDiceLeft(1)
     p.step()
     print(p.cell,"に止まりました")
     c = p.cell
@@ -247,14 +254,14 @@ def main(play_seed):
     while 1:
         # 表示を更新
         #status_window.update_display(players)
-        board_window.drawPlayer()
+        board_window.drawPlayer(p1)
         turn(p1)
         if p1.win != 0:
             winner = p1.name
             break
         # 表示を更新
         #status_window.update_display(players)
-        board_window.drawPlayer()
+        board_window.drawPlayer(p2)
         turn(p2)
         if p2.win != 0:
             winner = p2.name
