@@ -118,8 +118,9 @@ class BoardWindow:
                 self.status["text"]+="*"
             self.status["text"]+=f"[{p.name} point={p.point} x={p.x} y={p.y}]  "
     def showCell(self, cell, x,y):
-        font=("Courier New", "8")
+        font=("Courier New", "9")
         text=getsource(type(cell))
+        text=convert_indent_4_to_2(text)
         gcell=tk.Frame(self.main, borderwidth=1, relief=tk.SOLID )
         source=tk.Label(gcell, text=text, font=font,
                        borderwidth=1, relief=tk.SOLID , justify="left")
@@ -167,3 +168,13 @@ def gui_thread(window):
 def start(map, players):
     board_window=BoardWindow(map, players)
     return board_window
+
+def convert_indent_4_to_2(code):
+    lines = code.splitlines()
+    converted_lines = []
+    for line in lines:
+        leading_spaces = len(line) - len(line.lstrip())
+        new_indent = ' ' * (leading_spaces // 4 * 2)
+        content = line.lstrip()
+        converted_lines.append(new_indent + content)  
+    return '\n'.join(converted_lines)
