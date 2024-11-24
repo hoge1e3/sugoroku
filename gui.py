@@ -59,26 +59,27 @@ class BoardWindow:
         self.dir_label["text"]=""
         return self.dir_status
     def show(self):
-        self.seed=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
+        font=("Arial", 20)
+        self.seed=tk.Label(self.window,borderwidth=1, relief=tk.SOLID, font=font)
         self.seed.grid(row=0,column=0)
         self.main=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
         self.main.grid(row=1,column=0)
-        self.status=tk.Label(self.window,borderwidth=1, relief=tk.SOLID)
+        self.status=tk.Label(self.window,borderwidth=1, relief=tk.SOLID, font=font)
         self.status.grid(row=2,column=0)
         self.dice_frame=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
         self.dice_frame.grid(row=3,column=0)
         if self.dice_frame:
-            self.dice_label=tk.Label(self.dice_frame,borderwidth=1, relief=tk.SOLID)
+            self.dice_label=tk.Label(self.dice_frame,borderwidth=1, relief=tk.SOLID, font=font)
             self.dice_label.grid(row=0,column=0)
-            self.dice_button=tk.Button(self.dice_frame,text="サイコロを振る",command=lambda *_:self.do_cast(),state=tk.DISABLED)
+            self.dice_button=tk.Button(self.dice_frame,text="サイコロを振る",command=lambda *_:self.do_cast(),state=tk.DISABLED, font=font)
             self.dice_button.grid(row=0,column=1)
         self.dir_frame=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
         self.dir_frame.grid(row=4,column=0)
         def db(d,i):
-            self.dir_buttons[d]=tk.Button(self.dir_frame,text=d,command=lambda *_:self.do_seldir(d),state=tk.DISABLED)
+            self.dir_buttons[d]=tk.Button(self.dir_frame,text=d,command=lambda *_:self.do_seldir(d),state=tk.DISABLED, font=font)
             self.dir_buttons[d].grid(row=0,column=i)
         if self.dir_frame:
-            self.dir_label=tk.Label(self.dir_frame,text="")
+            self.dir_label=tk.Label(self.dir_frame,text="", font=font)
             self.dir_label.grid(row=0,column=0)
             self.dir_buttons={}
             i=1
