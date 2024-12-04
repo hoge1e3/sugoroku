@@ -1,8 +1,11 @@
+from glob import glob
 import sys
 import random
 import threading
 import gui
 import time
+import board
+import log
 
 map_seed=int(time.time()/100)
 #map_seed=17298475
@@ -140,6 +143,7 @@ def steps(p, p_step):
     print(p.cell,"に止まりました")
     c = p.cell
     print(getsource(type(c)))
+    log.add(["stop",p.name, p.cell, p.point])
     p.cell.stop(p)
 
 
@@ -166,8 +170,6 @@ if len(args) > 1:
     auto_play = args[1]
 else:
     auto_play = "manual"
-main_route = [
-]
 normalCellClasses=[
     cell1,cell2,cell3,
     cell3,cell3,cell3,cell3,cell3,
@@ -186,23 +188,39 @@ middleGateCellClasses=[
 def selectFrom(cellClasses):
     i=random.randint(0, len(cellClasses)-1)
     return cellClasses[i]()
+def gen_map():
+    main_route = [
+    ]
+    for i in range(13):
+        main_route.append(selectFrom(middleCellClasses))
+    i=random.randint(0,12)
+    main_route[i]=selectFrom(gateCellClasses)
+    for i in range(len(main_route)):
+        main_route[i].number=i+1
+    map=[
+        [0, 1, 2, 3, 4],
+        [5,-1, 6,-1, 7],
+        [8, 9,10,11,12]
+    ]
+    map=list( 
+        list(main_route[i] if i>=0 else None for i in row) 
+        for row in map)
+    return map
 
-for i in range(13):
-    main_route.append(selectFrom(middleCellClasses))
-i=random.randint(0,12)
-main_route[i]=selectFrom(gateCellClasses)
-for i in range(len(main_route)):
-    main_route[i].number=i+1
-map=[
-    [0, 1, 2, 3, 4],
-    [5,-1, 6,-1, 7],
-    [8, 9,10,11,12]
-]
-map=list( 
-    list(main_route[i] if i>=0 else None for i in row) 
-    for row in map)
-#print(map)
-#exit()
+filelist=["ランダム生成"]
+for file in glob("maps/*.json"):
+    filelist.append(file)
+for n,file in enumerate(filelist):
+    print(f"[{n}] {file}")
+mapsel=-1
+while not (0<=mapsel<len(filelist)):
+    mapsel=int(input(f"マップを選択してください (0-{len(filelist)-1})?"))
+if mapsel==0:
+    map=gen_map()
+    map_file=board.save(map)
+else:
+    map_file=filelist[mapsel]
+    map=board.load(map_file)
 
 def addstr(c, val):
     def s(self):
@@ -254,6 +272,7 @@ def main(play_seed):
     random.seed(play_seed)
     global turn_count
     turn_count=0
+    log.add(["start", map_file])
     while 1:
         # 表示を更新
         #status_window.update_display(players)
@@ -275,6 +294,7 @@ def main(play_seed):
         if max_turns and turn_count>=max_turns:
             winner = None
             break
+    log.add(["winner", winner])
     print(winner, " is win")
     print("map_seed= ", map_seed, "play_seed", play_seed, "Turn count",turn_count)
     return turn_count
@@ -284,7 +304,7 @@ def input2(mesg):
     #return input(mesg)
 board_window=gui.start(map, players)
 board_window.show()
-board_window.setSeed(map_seed)
+board_window.setSeed(map_file)
 gui_thread_instance = threading.Thread(target=mainRept, args=())
 gui_thread_instance.start()
 board_window.run()
