@@ -97,8 +97,10 @@ class GateCell4(Cell):
 
 class GateCell5(Cell):
     def stop(self, player):
-
-        player.win = 1
+        if int((player.point*player.x)/1000)%2!=0:
+           player.win = 1
+        else:
+            player.x+=11
 
 class GateCell6(Cell):
     def stop(self, player):
@@ -168,7 +170,7 @@ class cell13(Cell):
 
 class cell14(Cell):
     def stop(self,player):
-        player.x+=player.point/1000
+        player.x+=int(player.point/1000)
 
 class cell15(Cell):
     def stop(self,player):
@@ -180,11 +182,11 @@ class cell16(Cell):
 
 class cell17(Cell):
     def stop(self, player):
-        player.point+=player.x
+        player.point+=player.x*2000
 
 class cell18(Cell):
     def stop(self, player):
-        player.point-=player.x
+        player.point+=1500*player.x
 class cell19(Cell):
     def stop(self, player):
         player.other.point-=1000*player.x
@@ -212,7 +214,8 @@ class cell24(Cell):
 
 class cell25(Cell):
     def stop(self, player):
-        player.point+=player.other.point
+        if player.x%3==0:
+           player.point+=player.other.point
 
 class cell26(Cell):
     def stop(self, player):
@@ -220,11 +223,11 @@ class cell26(Cell):
 
 class cell27(Cell):
     def stop(self, player):
-        player.other.x=player.x
-
+        if player.x%2!=0:
+           player.x+=10
 class cell28(Cell):
     def stop(self, player):
-        player.other.point=player.point
+        player.other.x-=player.point/1000
 
 class cell29(Cell):
     def stop(self, player):

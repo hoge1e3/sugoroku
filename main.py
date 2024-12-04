@@ -9,6 +9,7 @@ import log
 
 map_seed=int(time.time()/100)
 #map_seed=17298475
+#17332197
 #17298481
 #17301936
 #17301950　マスが5種類
@@ -177,7 +178,7 @@ normalCellClasses=[
     cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12,cell13
 ]
 middleCellClasses=[
-    cell14,cell15,cell16,cell17,cell18,cell19,cell20,cell21,cell22,cell23,cell24,cell25,cell26
+    cell14,cell15,cell16,cell17,cell18,cell19,cell20,cell21,cell22,cell23,cell24,cell25,cell26,cell27,cell28,cell29,cell30,cell30,cell30
 ]
 gateCellClasses=[
     GateCell1,GateCell2,GateCell3,
@@ -188,6 +189,29 @@ middleGateCellClasses=[
 def selectFrom(cellClasses):
     i=random.randint(0, len(cellClasses)-1)
     return cellClasses[i]()
+level=int(input("Levelを選択してください\n1：初級\n2: 中級\n"))
+i=random.randint(0,12)
+
+if level == 1:
+    for i in range(13):
+        main_route.append(selectFrom(normalCellClasses))
+    main_route[i] = selectFrom(gateCellClasses)
+elif level == 2:
+    for i in range(13):
+        main_route.append(selectFrom(middleCellClasses))
+    main_route[i] = selectFrom(middleGateCellClasses)
+for i in range(len(main_route)):
+    main_route[i].number=i+1
+map=[
+    [0, 1, 2, 3, 4],
+    [5,-1, 6,-1, 7],
+    [8, 9,10,11,12]
+]
+map=list( 
+    list(main_route[i] if i>=0 else None for i in row) 
+    for row in map)
+#print(map)
+#exit()
 def gen_map():
     main_route = [
     ]
@@ -232,8 +256,6 @@ def addstrAll(cellClasses, start):
         start+=1
 addstrAll(normalCellClasses, 1)
 addstrAll(gateCellClasses, 100)
-
-
 turn_count = 0
 humans=int(input("人数を入力してください（0~2）"))
 if humans>=30:
