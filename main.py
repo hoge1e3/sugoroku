@@ -208,7 +208,7 @@ addstrAll(gateCellClasses, 100)
 
 turn_count = 0
 humans=int(input("人数を入力してください（0~2）"))
-if humans>=100:
+if humans>=30:
     noSleep=True
     trial=humans
     humans=0
