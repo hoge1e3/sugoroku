@@ -75,30 +75,24 @@ class MulCell(Cell):
 
 class GateCell1(Cell):
     def stop(self, player):
-        if (player.point>=12 or
-                player.point<=-12):
+        if (player.point>=12000 or
+                player.point<=-12000):
             player.win = 1
-        else:
-            player.point-=1
-
-
 class GateCell2(Cell):
     def stop(self, player):
-        if player.point>15:
+        if player.point>15000:
             player.win=1
         else:
-            player.point+=-1
-
-
+            player.point+=1000
 class GateCell3(Cell):
     def stop(self, player):
-        if player.point>10 and player.point%2==1:
+        if player.point>10000:
             player.win=1
         else:
-            player.point+=1
+            player.point+=1000
 class GateCell4(Cell):
-    def stop(self, player):
-        if player.x+player.point>100:
+    def stop(self, player):#check
+        if player.x*player.point>10000:
             player.win = 1
 
 class GateCell5(Cell):
@@ -108,7 +102,7 @@ class GateCell5(Cell):
 
 class GateCell6(Cell):
     def stop(self, player):
-        if player.point>10:
+        if player.point>10000:
             player.win=1
         else:
             player.x+=1
@@ -116,26 +110,26 @@ class GateCell6(Cell):
 
 class cell1(Cell):
     def stop(self, player):
-        player.point+=1
+        player.point+=1000
 
 
 class cell2(Cell):
     def stop(self, player):
-        player.point-=1
+        player.point-=1000
 
 
 class cell3(Cell):
     def stop(self, player):
-        player.point+=3
+        player.point+=3000
 
 
 class cell4(Cell):
     def stop(self, player):
-        player.point+=3
+        player.point+=4000
 
 class cell5(Cell):
     def stop(self, player):
-        player.point-=1
+        player.point+=5000
 
 class cell6(Cell):
     def stop(self, player):
@@ -143,19 +137,19 @@ class cell6(Cell):
 
 class cell7(Cell):
     def stop(self, player):
-        player.point-=3
+        player.point-=3000
 
 class cell8(Cell):
     def stop(self, player):
-        player.point+=-2
+        player.point+=-1000
 
 class cell9(Cell):
     def stop(self, player):
-        player.point-=-2
+        player.point-=-2000
 
 class cell10(Cell):
     def stop(self, player):
-        player.point+=-3
+        player.point+=-1000
 
 class cell11(Cell):
     def stop(self, player):
@@ -163,18 +157,18 @@ class cell11(Cell):
 
 class cell12(Cell):
     def stop(self, player):
-        player.point-=-1
+        player.point-=-4000
 
 class cell13(Cell):
     def stop(self, player):
         if player.input_YN("y/n")=="y":
-            player.point-=1
+            player.point-=1000
         else:
-            player.point+=2
+            player.point+=10000
 
 class cell14(Cell):
     def stop(self,player):
-        player.x+=1
+        player.x+=player.point/1000
 
 class cell15(Cell):
     def stop(self,player):
@@ -182,7 +176,7 @@ class cell15(Cell):
 
 class cell16(Cell):
     def stop(self,player):
-        player.other.point-=5
+        player.other.point-=1000
 
 class cell17(Cell):
     def stop(self, player):
@@ -193,15 +187,15 @@ class cell18(Cell):
         player.point-=player.x
 class cell19(Cell):
     def stop(self, player):
-        player.other.point+=player.x
+        player.other.point-=1000*player.x
 
 class cell20(Cell):
     def stop(self, player):
-        player.other.x-=4
+        player.other.x+=4
 
 class cell21(Cell):
     def stop(self, player):
-        player.point+=5
+        player.point+=1000*player.x
 
 class cell22(Cell):
     def stop(self,player):
@@ -209,11 +203,12 @@ class cell22(Cell):
 
 class cell23(Cell):
     def stop(self, player):
-        player.point+=player.other.other.x
+        if player.x%2==0:
+            player.point+=5000
 
 class cell24(Cell):
     def stop(self, player):
-        player.other.x-=player.x
+        player.other.x+=player.x
 
 class cell25(Cell):
     def stop(self, player):
@@ -221,7 +216,7 @@ class cell25(Cell):
 
 class cell26(Cell):
     def stop(self, player):
-        player.other.point-=3
+        player.other.point-=3000
 
 class cell27(Cell):
     def stop(self, player):
@@ -230,3 +225,11 @@ class cell27(Cell):
 class cell28(Cell):
     def stop(self, player):
         player.other.point=player.point
+
+class cell29(Cell):
+    def stop(self, player):
+        player.point+=2000*player.x
+
+class cell30(Cell):
+    def stop(self,player):
+        player.x+=3
