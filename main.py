@@ -299,7 +299,9 @@ def main(play_seed):
             winner = None
             break
     log.add(["winner", winner])
-    print(winner, " is win")
+    print(winner, " is the winner")
+    if board_window:
+        board_window.setMessage(f"{winner} is the winner")
     #print("map_seed= ", map_seed, "play_seed", play_seed, "Turn count",turn_count)
     return turn_count
     

@@ -11,13 +11,21 @@ class GCell:
         self.players=players
         self.source=source
 dirs=["l","u","d","r"]
+dir_label={"l":"←", "u":"↑", "d":"↓", "r":"→"}
+
 class BoardWindow:
     def __init__(self, map, players):
+        def ex():
+            self.window.destroy()
+            self.exited=True
+            exit()
+        self.exited=False
         self.map=map
         self.players=players
         self.window = tk.Tk()
         self.window.title("Board Status")
         self.window.geometry(f"{W}x{H}")
+        self.window.protocol("WM_DELETE_WINDOW", ex)
         self.gcells=[]
         self.dice_status=None
         self.dir_status=None
@@ -27,6 +35,7 @@ class BoardWindow:
         self.inputE.delete(0,tk.END)
         while not self.entered:
             sleep(0.1)
+            if self.exited: break
         return self.inputE.get()
     def do_cast(self):
         self.dice_button["state"]=tk.DISABLED
@@ -36,6 +45,7 @@ class BoardWindow:
         self.dice_button["state"]=tk.NORMAL
         self.dice_status="waitPush"
         while self.dice_status=="waitPush":
+            if self.exited: break
             sleep(0.05)
         for i in range(20):
             res=randint(1,6)
@@ -76,7 +86,7 @@ class BoardWindow:
         self.dir_frame=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
         self.dir_frame.grid(row=4,column=0)
         def db(d,i):
-            self.dir_buttons[d]=tk.Button(self.dir_frame,text=d,command=lambda *_:self.do_seldir(d),state=tk.DISABLED, font=font)
+            self.dir_buttons[d]=tk.Button(self.dir_frame,text=dir_label[d],command=lambda *_:self.do_seldir(d),state=tk.DISABLED, font=font)
             self.dir_buttons[d].grid(row=0,column=i)
         if self.dir_frame:
             self.dir_label=tk.Label(self.dir_frame,text="", font=font)
@@ -106,15 +116,20 @@ class BoardWindow:
     def setSeed(self, val):
         self.seed["text"]=val
     def setMessage(self, val):
-        self.message["text"]=val
+        self.dice_label["text"]=val
     def setDiceLeft(self, c):
         self.dice_label["text"]="残り: "+str(c)
     def drawPlayer(self,turn):
+        for c in self.gcells:
+            c.source["foreground"]="#000000"
         for c in self.gcells:
             c.players["text"]=""
             for p in self.players:
                 if c.cell==p.cell:
                     c.players["text"]+=p.name
+                    if p==turn:
+                        c.source["foreground"]="#ff0000" if p.name=="p1" else "#0000ff"
+
         self.status["text"]=""
         for p in self.players:
             if p==turn:
