@@ -215,7 +215,7 @@ class cell24(Cell):
 class cell25(Cell):
     def stop(self, player):
         if player.x%3==0:
-           player.point+=player.other.point
+            player.point+=player.other.point
 
 class cell26(Cell):
     def stop(self, player):
@@ -224,7 +224,7 @@ class cell26(Cell):
 class cell27(Cell):
     def stop(self, player):
         if player.x%2!=0:
-           player.x+=10
+            player.x+=10
 class cell28(Cell):
     def stop(self, player):
         player.other.x-=player.point/1000

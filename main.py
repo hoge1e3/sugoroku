@@ -7,13 +7,13 @@ import time
 import board
 import log
 
-map_seed=int(time.time()/100)
+#map_seed=int(time.time()/100)
 #map_seed=17298475
 #17332197
 #17298481
 #17301936
 #17301950　マスが5種類
-random.seed(map_seed)
+#random.seed(map_seed)
 
 from time import sleep
 import tkinter as tk
@@ -89,8 +89,9 @@ class Player:
     def step(self):
         self.dir=self.select_dir()
         self.pos=add_dir(self.pos, self.dir)
-        board_window.drawPlayer(self)
-        sleep2(0.2)
+        if board_window:
+            board_window.drawPlayer(self)
+            sleep2(0.2)
     @property
     def cell(self):
         return cell_at(self.pos)
@@ -134,17 +135,17 @@ class Player:
 # 進む処理
 def steps(p, p_step):
     for i in range(p_step,1,-1):
-        board_window.setDiceLeft(i)
+        if board_window: board_window.setDiceLeft(i)
         p.step()
-        board_window.setDiceLeft(i-1)
+        if board_window: board_window.setDiceLeft(i-1)
         print(p.cell.number)
         p.cell.over(p)
-    board_window.setDiceLeft(1)
+    if board_window: board_window.setDiceLeft(1)
     p.step()
     print(p.cell,"に止まりました")
     c = p.cell
     print(getsource(type(c)))
-    log.add(["stop",p.name, p.cell, p.point])
+    log.add(["stop",p, p.other])
     p.cell.stop(p)
 
 
@@ -221,7 +222,7 @@ while not (0<=mapsel<len(filelist)):
 if mapsel==0:
     level=int(input("Levelを選択してください\n1：初級\n2: 中級\n"))
     map=gen_map(level)
-    map_file=board.save(map)
+    map_file=board.save(map, str(level))
 else:
     map_file=filelist[mapsel]
     map=board.load(map_file)
@@ -269,23 +270,24 @@ def mainRept():
             play_seed+=100
             init_players()
         print("Average turn count",sum_turn_count/trial)
+        if board_window: board_window.window.quit()
     exit()
 def main(play_seed):
-    random.seed(play_seed)
+    #random.seed(play_seed)
     global turn_count
     turn_count=0
     log.add(["start", map_file])
     while 1:
         # 表示を更新
         #status_window.update_display(players)
-        board_window.drawPlayer(p1)
+        if board_window: board_window.drawPlayer(p1)
         turn(p1)
         if p1.win != 0:
             winner = p1.name
             break
         # 表示を更新
         #status_window.update_display(players)
-        board_window.drawPlayer(p2)
+        if board_window: board_window.drawPlayer(p2)
         turn(p2)
         if p2.win != 0:
             winner = p2.name
@@ -298,15 +300,19 @@ def main(play_seed):
             break
     log.add(["winner", winner])
     print(winner, " is win")
-    print("map_seed= ", map_seed, "play_seed", play_seed, "Turn count",turn_count)
+    #print("map_seed= ", map_seed, "play_seed", play_seed, "Turn count",turn_count)
     return turn_count
     
 def input2(mesg):
     return board_window.input(mesg)
     #return input(mesg)
-board_window=gui.start(map, players)
-board_window.show()
-board_window.setSeed(map_file)
-gui_thread_instance = threading.Thread(target=mainRept, args=())
-gui_thread_instance.start()
-board_window.run()
+if not trial:
+    board_window=gui.start(map, players)
+    board_window.show()
+    board_window.setSeed(map_file)
+    gui_thread_instance = threading.Thread(target=mainRept, args=())
+    gui_thread_instance.start()
+    board_window.run()
+else:
+    board_window=None
+    mainRept()

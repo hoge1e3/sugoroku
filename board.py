@@ -19,11 +19,11 @@ def conv(e):
             o[n]=v                
         return o
     return e
-def save(map):
+def save(map, prefix="map"):
     t_delta = datetime.timedelta(hours=9)
     JST = datetime.timezone(t_delta, 'JST')
     now = datetime.datetime.now(JST)
-    filename=now.strftime('maps/map-%Y%m%d-%H%M%S.json')
+    filename=now.strftime(f'maps/{prefix}-%Y%m%d-%H%M%S.json')
     with open(filename,"w") as f:
         json.dump(map, f,default=conv,indent=2)
     return filename

@@ -12,6 +12,8 @@ def conv(e, visited=None):
         return e
     if isinstance(e, str):
         return e
+    if isinstance(e, tuple):
+        return e
     if not visited:
         visited=set()
     if id(e) in visited:
@@ -30,6 +32,8 @@ def conv(e, visited=None):
             if re.search(r"^__",n):continue
             v=e.__getattribute__(n)
             if callable(v):continue
+            if n=="others": continue
+            if n=="other": continue
             o[n]=conv(v, visited)                
         return o
     return e
