@@ -5,8 +5,12 @@ class Cell:
         global cell_ID
         cell_ID += 1
         self.number = cell_ID
+        self.x=0
+        self.y=0
     def __str__(self):
         return "{}番のマス".format(self.number)
+    def fields(self):
+        return f"x={self.x} y={self.y}"
     def stop(self, player):
         pass
     def over(self, player):
@@ -191,3 +195,8 @@ class cell30(Cell):
     def stop(self,player):
         player.x+=3
 
+class cell50(Cell):
+    def stop(self, player):
+        self.x+=1
+        if self.x>=3:
+            player.point+=5000

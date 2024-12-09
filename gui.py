@@ -6,10 +6,11 @@ from time import sleep
 W=1000
 H=800
 class GCell:
-    def __init__(self, cell, players, source):
+    def __init__(self, cell, players, source, instance):
         self.cell=cell
         self.players=players
         self.source=source
+        self.instance=instance
 dirs=["l","u","d","r"]
 dir_label={"l":"←", "u":"↑", "d":"↓", "r":"→"}
 
@@ -69,7 +70,7 @@ class BoardWindow:
         self.dir_label["text"]=""
         return self.dir_status
     def show(self):
-        font=("Arial", 20)
+        font=("Arial", 15)
         self.seed=tk.Label(self.window,borderwidth=1, relief=tk.SOLID, font=font)
         self.seed.grid(row=0,column=0)
         self.main=tk.Frame(self.window,borderwidth=1, relief=tk.SOLID)
@@ -122,6 +123,7 @@ class BoardWindow:
     def drawPlayer(self,turn):
         for c in self.gcells:
             c.source["foreground"]="#000000"
+            c.instance["text"]=c.cell.fields()
         for c in self.gcells:
             c.players["text"]=""
             for p in self.players:
@@ -142,11 +144,17 @@ class BoardWindow:
         gcell=tk.Frame(self.main, borderwidth=1, relief=tk.SOLID )
         source=tk.Label(gcell, text=text, font=font,
                        borderwidth=1, relief=tk.SOLID , justify="left")
-        source.grid(row=0,column=0)
+        source.grid(row=0,column=0)        
+        instance = tk.Label(gcell, font=font, text=cell.fields(),
+            borderwidth=1, relief=tk.SOLID , justify="left")
+        instance.grid(row=1, column=0)
+
         players=tk.Label(gcell, text="players", font=font)
-        players.grid(row=1,column=0)
+        #    borderwidth=1, relief=tk.SOLID , justify="left")
+        players.grid(row=2,column=0)
+
         gcell.grid(row=y, column=x)
-        gc=GCell(cell, players, source)
+        gc=GCell(cell, players, source, instance)
         self.gcells.append(gc)
         return gc
     def run(self):
