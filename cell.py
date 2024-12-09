@@ -12,103 +12,57 @@ class Cell:
     def over(self, player):
         pass
 
-
-class SetCell(Cell):
-    def __init__(self, field, value):
-        super().__init__()
-        self.field = field
-        self.value = value
-
-    def __str__(self):
-        return "{}に{}をSetする{}番目のマス".format(self.field, self.value, self.number)
-
-    def stop(self, p):#止まった時
-        if self.field == "x":
-            p.x = self.value#xの値をvalueの値にする
-        elif self.field == "y":
-            p.y = self.value
-
-
-class AddCell(Cell):
-    def __init__(self, field, value):
-        super().__init__()
-        self.field = field
-        self.value = value
-    def __str__(self):
-        return "{}に{}をAddする{}番目のマス".format(self.field, self.value, self.number)
-    def stop(self, p):#止まった時
-        if self.field == "x":
-            p.x += self.value#xの値をvalueの値の分増やす
-        elif self.field == "y":
-            p.y += self.value
-
-
-class SubCell(Cell):
-    def __init__(self, field, value):
-        super().__init__()
-        self.field = field
-        self.value = value
-
-    def __str__(self):
-        return "{}に{}をSubする{}番目のマス".format(self.field, self.value, self.number)
-
-    def stop(self, p):#止まった時
-        if self.field == "x":
-            p.x -= self.value#xの値をvalueの値の分減らす
-        elif self.field == "y":
-            p.y -= self.value
-
-class MulCell(Cell):
-    def __init__(self, field, value):
-        super().__init__()
-        self.field = field
-        self.value = value
-
-    def __str__(self):
-        return "{}に{}をMulする{}番目のマス".format(self.field, self.value, self.number)
-
-    def stop(self, p):
-        if self.field == "x":
-            p.x *= self.value
-        elif self.field == "y":
-            p.y *= self.value
-
 class GateCell1(Cell):
     def stop(self, player):
         if (player.point>=12000 or
                 player.point<=-12000):
             player.win = 1
+    def over(self,player):
+        if player.point>=50000:
+            player.win=1
 class GateCell2(Cell):
     def stop(self, player):
         if player.point>15000:
             player.win=1
         else:
             player.point+=1000
+    def over(self,player):
+        if player.point>=50000:
+            player.win=1
 class GateCell3(Cell):
     def stop(self, player):
         if player.point>10000:
             player.win=1
         else:
             player.point+=1000
+    def over(self,player):
+        if player.point>=50000:
+            player.win=1
 class GateCell4(Cell):
     def stop(self, player):#check
         if player.x*player.point>10000:
             player.win = 1
-
+    def over(self,player):
+        if player.point>=50000:
+            player.win=1
 class GateCell5(Cell):
     def stop(self, player):
         if int((player.point*player.x)/1000)%2!=0:
            player.win = 1
         else:
             player.x+=11
-
+    def over(self,player):
+        if player.point>=50000:
+            player.win=1
 class GateCell6(Cell):
     def stop(self, player):
         if player.point>10000:
             player.win=1
         else:
             player.x+=1
-
+    def over(self,player):
+        if player.point>=50000:
+            player.win=1
 
 class cell1(Cell):
     def stop(self, player):
