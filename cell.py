@@ -5,6 +5,7 @@ class Cell:
         global cell_ID
         cell_ID += 1
         self.number = cell_ID
+        self.y=0
     def __str__(self):
         return "{}番のマス".format(self.number)
     def stop(self, player):
@@ -45,7 +46,7 @@ class GateCell4(Cell):
         if player.x*player.point>10000:
             player.win = 1
         else:
-            player.x+=11
+            player.x+=1
     def over(self,player):
         if player.x*player.point>=500000:
             player.win=1
@@ -54,7 +55,7 @@ class GateCell5(Cell):
         if int((player.point*player.x)/1000)%2!=0:
            player.win = 1
         else:
-            player.x+=11
+            player.x+=1
     def over(self,player):
         if player.point>=50000:
             player.win=1
@@ -63,7 +64,7 @@ class GateCell6(Cell):
         if player.point>10000:
             player.win=1
         else:
-            player.x+=11
+            player.x+=1
     def over(self,player):
         if player.point>=50000:
             player.win=1
@@ -195,3 +196,22 @@ class cell30(Cell):
     def stop(self,player):
         player.x+=3
 
+class cell31(Cell):
+    def stop(self, player):
+        player.point+=self.y*1000
+        self.y=0
+    def over(self,player):
+        self.y+=1
+
+class cell32(Cell):
+    def stop(self, player):
+        player.point+=self.y
+        self.y=0
+    def over(self,player):
+        player.point-=1000
+        self.y+=1000
+
+class cell33(Cell):
+    def stop(self, player):
+        self.y+=1000
+        player.point+=self.y

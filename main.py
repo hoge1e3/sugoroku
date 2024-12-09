@@ -79,13 +79,6 @@ class Player:
         candNames=list(dir2name(c) for c in candidates)
         return name2dir(board_window.seldir(candNames))
 
-        while True:
-            d=input2("どの方向に行きますか:("+"/".join(candNames)+")?")
-            if d=="50000":
-                exit()
-            if d in candNames:
-                return name2dir(d)
-    
     def step(self):
         self.dir=self.select_dir()
         self.pos=add_dir(self.pos, self.dir)
