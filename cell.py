@@ -7,6 +7,7 @@ class Cell:
         self.number = cell_ID
         self.x=0
         self.y=0
+        self.gate="close"
     def __str__(self):
         return "{}番のマス".format(self.number)
     def fields(self):
@@ -71,6 +72,18 @@ class GateCell6(Cell):
     def over(self,player):
         if player.point>=50000:
             player.win=1
+
+class GateCell7(Cell):
+    def stop(self, player):
+        if self.gate=="open":
+            if player.x>10:
+                player.win=1
+        elif self.y>25:
+                self.gate="open"
+    def over(self, player):
+        self.y+=player.y
+
+
 
 class cell1(Cell):
     def stop(self, player):
@@ -214,10 +227,52 @@ class cell32(Cell):
         player.point-=1000
         self.y+=1000
 
+
 class cell33(Cell):
     def stop(self, player):
         self.y+=1000
         player.point+=self.y
+
+class cell34(Cell):
+    def stop(self, player):
+        player.other.cell.y=1
+
+class cell35(Cell):#GateCell7
+    def stop(self, player):
+        player.y+=self.y
+        self.y=0
+    def over(self, player):
+        self.y+=1
+
+class cell36(Cell):#GateCell7
+    def stop(self,player):
+        player.x+=self.x
+    def over(self, player):
+        self.x+=1
+        player.x-=1
+
+class cell37(Cell):#Gate7
+    def stop(self, player):
+        x = self.x
+        self.x = player.x
+        player.x = x
+    def over(self, player):
+        self.x-=1
+class cell38(Cell):#gate7
+    def stop(self, player):
+        if self.x%2==0:
+          player.x+=5
+    def over(self, player):
+        self.x+=1
+
+class cell39(Cell):#gate7
+    def stop(self, player):
+        self.y=player.y
+        player.y=0
+    def over(self, player):
+        player.y+=self.y
+        self.y-=1
+
 class cell50(Cell):
     def stop(self, player):
         self.x+=1
