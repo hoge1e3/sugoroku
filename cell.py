@@ -1,12 +1,14 @@
+from random import randint
 cell_ID=0
+
 # Cellはマス目。
 class Cell:
     def __init__(self):
         global cell_ID
         cell_ID += 1
         self.number = cell_ID
-        self.x=0
-        self.y=0
+        self.x=randint(-5,5)
+        self.y=randint(-5,5)
         self.gate="close"
     def __str__(self):
         return "{}番のマス".format(self.number)
@@ -194,7 +196,8 @@ class cell25(Cell):
 
 class cell26(Cell):
     def stop(self, player):
-        player.other.point-=(player.point-player.other.point)
+        p=player.other.point
+        player.other.point=p
 
 class cell27(Cell):
     def stop(self, player):

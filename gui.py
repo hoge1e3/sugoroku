@@ -1,3 +1,4 @@
+# show/hide  instance by level
 import tkinter as tk
 from inspect import getsource
 import threading
