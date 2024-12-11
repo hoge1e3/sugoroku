@@ -1,17 +1,18 @@
-# show/hide  instance by level
+# show/hide  fields by level
 import tkinter as tk
 from inspect import getsource
 import threading
 from random import randint
 from time import sleep
+from cell import StateCell
 W=1000
 H=800
 class GCell:
-    def __init__(self, cell, players, source, instance):
+    def __init__(self, cell, players, source, fields):
         self.cell=cell
         self.players=players
         self.source=source
-        self.instance=instance
+        self.fields=fields
 dirs=["l","u","d","r"]
 dir_label={"l":"←", "u":"↑", "d":"↓", "r":"→"}
 
@@ -124,7 +125,8 @@ class BoardWindow:
     def drawPlayer(self,turn):
         for c in self.gcells:
             c.source["foreground"]="#000000"
-            c.instance["text"]=c.cell.fields()
+            if c.fields:
+                c.fields["text"]=c.cell.fields()
         for c in self.gcells:
             c.players["text"]=""
             for p in self.players:
@@ -145,17 +147,20 @@ class BoardWindow:
         gcell=tk.Frame(self.main, borderwidth=1, relief=tk.SOLID )
         source=tk.Label(gcell, text=text, font=font,
                        borderwidth=1, relief=tk.SOLID , justify="left")
-        source.grid(row=0,column=0)        
-        instance = tk.Label(gcell, font=font, text=cell.fields(),
-            borderwidth=1, relief=tk.SOLID , justify="left")
-        instance.grid(row=1, column=0)
-
+        source.grid(row=0,column=0)       
         players=tk.Label(gcell, text="players", font=font)
         #    borderwidth=1, relief=tk.SOLID , justify="left")
-        players.grid(row=2,column=0)
+        if "fields" in cell.__dict__:
+            fields = tk.Label(gcell, font=font, text=cell.fields(),
+                borderwidth=1, relief=tk.SOLID , justify="left")
+            fields.grid(row=1, column=0)
+            players.grid(row=2,column=0)
+        else: 
+            fields=None
+            players.grid(row=1,column=0)
 
         gcell.grid(row=y, column=x)
-        gc=GCell(cell, players, source, instance)
+        gc=GCell(cell, players, source, fields)
         self.gcells.append(gc)
         return gc
     def run(self):

@@ -7,13 +7,10 @@ class Cell:
         global cell_ID
         cell_ID += 1
         self.number = cell_ID
-        self.x=randint(-5,5)
-        self.y=randint(-5,5)
         self.gate="close"
     def __str__(self):
         return "{}番のマス".format(self.number)
-    def fields(self):
-        return f"x={self.x} y={self.y}"
+
     def stop(self, player):
         pass
     def over(self, player):
@@ -211,18 +208,26 @@ class cell29(Cell):
     def stop(self, player):
         player.point+=2000*player.x
 
-class cell30(Cell):
+class StateCell(Cell):
+    def __init__(self):
+        super().__init__()
+        self.x=randint(-5,5)
+        self.y=randint(-5,5)
+    def fields(self):
+        return f"x={self.x} y={self.y}"
+    
+class cell30(StateCell):
     def stop(self,player):
         player.x+=3
 
-class cell31(Cell):
+class cell31(StateCell):
     def stop(self, player):
         player.point+=self.y*1000
         self.y=0
     def over(self,player):
         self.y+=1
 
-class cell32(Cell):
+class cell32(StateCell):
     def stop(self, player):
         player.point+=self.y
         self.y=0
@@ -231,44 +236,44 @@ class cell32(Cell):
         self.y+=1000
 
 
-class cell33(Cell):
+class cell33(StateCell):
     def stop(self, player):
         self.y+=1000
         player.point+=self.y
 
-class cell34(Cell):
+class cell34(StateCell):
     def stop(self, player):
         player.other.cell.y=1
 
-class cell35(Cell):#GateCell7
+class cell35(StateCell):#GateCell7
     def stop(self, player):
         player.y+=self.y
         self.y=0
     def over(self, player):
         self.y+=1
 
-class cell36(Cell):#GateCell7
+class cell36(StateCell):#GateCell7
     def stop(self,player):
         player.x+=self.x
     def over(self, player):
         self.x+=1
         player.x-=1
 
-class cell37(Cell):#Gate7
+class cell37(StateCell):#Gate7
     def stop(self, player):
         x = self.x
         self.x = player.x
         player.x = x
     def over(self, player):
         self.x-=1
-class cell38(Cell):#gate7
+class cell38(StateCell):#gate7
     def stop(self, player):
         if self.x%2==0:
           player.x+=5
     def over(self, player):
         self.x+=1
 
-class cell39(Cell):#gate7
+class cell39(StateCell):#gate7
     def stop(self, player):
         self.y=player.y
         player.y=0
@@ -276,7 +281,7 @@ class cell39(Cell):#gate7
         player.y+=self.y
         self.y-=1
 
-class cell50(Cell):
+class cell50(StateCell):
     def stop(self, player):
         self.x+=1
         if self.x>=3:
