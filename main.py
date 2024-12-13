@@ -72,8 +72,8 @@ class Player:
         return cands
     def select_dir(self):
         candidates=self.dir_candidates()
-        if len(candidates)==1:
-            return candidates[0]
+        #if len(candidates)==1:
+        #    return candidates[0]
         if not self.human:
             return candidates[random.randint(0,len(candidates)-1)]
         candNames=list(dir2name(c) for c in candidates)

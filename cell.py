@@ -234,8 +234,8 @@ class Cell30(Cell):
 class StateCell(Cell):
     def __init__(self):
         super().__init__()
-        self.x=randint(-5,5)
-        self.y=randint(-5,5)
+        self.x=randint(0,5)
+        self.y=randint(0,5)
     def fields(self):
         return f"x={self.x} y={self.y}"
     

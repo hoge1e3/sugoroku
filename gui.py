@@ -62,7 +62,7 @@ class BoardWindow:
         for d in dirs:
             self.dir_buttons[d]["state"]=tk.DISABLED
     def seldir(self,cands):
-        self.dir_label["text"]="分かれ道です。どちらに行きますか:"
+        self.dir_label["text"]="どちらに行きますか:"
         self.disable_dirs()
         for c in cands:
             self.dir_buttons[c]["state"]=tk.NORMAL
@@ -91,6 +91,11 @@ class BoardWindow:
         def db(d,i):
             self.dir_buttons[d]=tk.Button(self.dir_frame,text=dir_label[d],command=lambda *_:self.do_seldir(d),state=tk.DISABLED, font=font)
             self.dir_buttons[d].grid(row=0,column=i)
+        self.window.bind("<Left>", lambda _:self.do_seldir("l"))
+        self.window.bind("<Right>",lambda _:self.do_seldir("r"))
+        self.window.bind("<Up>",   lambda _:self.do_seldir("u"))
+        self.window.bind("<Down>", lambda _:self.do_seldir("d"))
+        self.window.bind("<space>", lambda _:self.do_cast())
         if self.dir_frame:
             self.dir_label=tk.Label(self.dir_frame,text="", font=font)
             self.dir_label.grid(row=0,column=0)
