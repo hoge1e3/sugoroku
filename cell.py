@@ -284,12 +284,13 @@ class Cell37(StateCell):#Gate7
         self.x = player.x
         player.x = x
     def over(self, player):
-        self.x-=1
+        self.x+=1
 class Cell38(StateCell):#gate7
     def stop(self, player):
-        if self.x%2==0:
-            player.x+=5
+        player.y+=self.y
+        self.x+=1
     def over(self, player):
+        player.x+=self.x
         self.x+=1
 
 class Cell39(StateCell):#gate7
