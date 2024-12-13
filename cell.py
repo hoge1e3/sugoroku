@@ -16,9 +16,13 @@ class Cell:
     def over(self, player):
         pass
 class GateCell(Cell):
+    pass
+class StateGateCell(Cell):
     def __init__(self):
         super().__init__()
         self.gate="close"
+        self.x=0
+        self.y=0
     def fields(self):
         return f"gate={self.gate}"
 
@@ -78,7 +82,7 @@ class GateCell6(GateCell):
         if player.point>=50000:
             player.win=1
 
-class GateCell7(GateCell):
+class GateCell7(StateGateCell):
     def stop(self, player):
         if self.gate=="open":
             if player.x>10:
@@ -286,7 +290,7 @@ class cell39(StateCell):#gate7
     def over(self, player):
         player.y+=self.y
         self.y-=1
-class cell40(Cell):#gate7
+class cell40(StateCell):#gate7
     def stop(self, player):
         player.x+=self.x
         player.y+=self.y
