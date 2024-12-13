@@ -166,13 +166,13 @@ if len(args) > 1:
 else:
     auto_play = "manual"
 normalCellClasses=[
-    cell1,cell2,cell3,
-    cell3,cell3,cell3,cell3,cell3,
-    cell4,cell4,cell4,cell4,cell4,
-    cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12,cell13
+    Cell1,Cell2,Cell3,
+    Cell3,Cell3,Cell3,Cell3,Cell3,
+    Cell4,Cell4,Cell4,Cell4,Cell4,
+    Cell4,Cell5,Cell6,Cell7,Cell8,Cell9,Cell10,Cell11,Cell12,Cell13
 ]
 middleCellClasses=[
-    cell14,cell15,cell16,cell17,cell18,cell19,cell20,cell21,cell22,cell23,cell24,cell25,cell26,cell27,cell28,cell29,cell30,cell30,cell30,cell50,cell31
+    Cell14,Cell15,Cell16,Cell17,Cell18,Cell19,Cell20,Cell21,Cell22,Cell23,Cell24,Cell25,Cell26,Cell27,Cell28,Cell29,Cell30,Cell30,Cell30,Cell50,Cell31
 ]
 gateCellClasses=[
     GateCell1,GateCell2,GateCell3,
