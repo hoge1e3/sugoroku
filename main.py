@@ -174,9 +174,8 @@ normalCellClasses=[
 middleCellClasses=[
     Cell14,Cell15,Cell16,Cell17,Cell18,Cell19,Cell20,Cell21,Cell22,Cell23,Cell24,Cell25,Cell26,Cell27,Cell28,Cell29,Cell30,Cell30,Cell30,Cell50,Cell31
 ]
-stateCellClasses=[
-    Cell35,Cell35,Cell36,Cell36,Cell37,Cell37,Cell38,Cell38,Cell39,Cell39,Cell40,Cell40,Cell41,Cell41
-]
+#stateCellClasses=[Cell35,Cell35,Cell36,Cell36,Cell37,Cell37,Cell38,Cell38,Cell39,Cell39,Cell40,Cell40,Cell41,Cell41]
+stateCellClasses=[Cell60,Cell60,Cell61,Cell61,Cell62,Cell62,Cell63,Cell63,Cell63,Cell64,Cell64,Cell65,Cell65,Cell66,Cell66,Cell66,Cell18,Cell18,Cell19,Cell19,Cell21,Cell21]
 gateCellClasses=[
     GateCell1,GateCell2,GateCell3,
 ]
@@ -185,7 +184,7 @@ middleGateCellClasses=[
 ]
 
 stateGateCellClasses=[
-    GateCell7
+    GateCell8
 ]
 
 def selectFrom(cellClasses):

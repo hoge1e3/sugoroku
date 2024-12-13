@@ -428,3 +428,16 @@ class Cell64(StateCell):
     def over(self, player):
         self.x+=1
 
+class Cell65(StateCell):
+    def stop(self, player):
+        self.x+=1
+        self.y+=1
+        player.x*=self.x
+        player.y*=self.y
+
+class Cell66(StateCell):
+    def stop(self, player):
+        player.x+=self.x
+        self.x=0
+    def over(self, player):
+        self.x+=3
