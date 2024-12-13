@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import PurePath
 match_chunk=None
 map_chunk=None
 def proc_map(map_chunk):
@@ -24,7 +25,8 @@ def proc_map(map_chunk):
         (w,l)=sum_stops[cell]
         sum_stops[cell]=int((w*100)/(w+l))-50
     if sum_turns/le>30:
-        os.remove(map_file)
+        dst=os.path.join( os.path.dirname(map_file), "toolong", os.path.basename(map_file))
+        os.rename(map_file, dst)
     else:
         print(map_file, sum_win_point/le, sum_lose_point/le, sum_turns/le , sum_stops)
 def proc_match(match_chunk):
@@ -53,20 +55,23 @@ def proc_match(match_chunk):
     map_chunk.append((len(stops), winp["point"], losep["point"], stopc))#, winner_stops, loser_stops)
 
 with open("logs/log.jsonl","r") as f:
+    ln=0
     for line in f.readlines():
         try:
+            ln+=1
             data=json.loads(line)
             #print(data)
             if data[0]=="start":
                 match_chunk=[data]
             elif data[0]=="winner":
-                match_chunk.append(data)
-                proc_match(match_chunk)
+                if match_chunk:
+                    match_chunk.append(data)
+                    proc_match(match_chunk)
                 match_chunk=None
             elif match_chunk:
                 match_chunk.append(data)
         except Exception as e:
-            print("At line ",line)
+            print("At line ",ln, ":", line)
             print(e)
             raise e
 """
