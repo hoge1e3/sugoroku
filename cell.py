@@ -124,10 +124,13 @@ class Cell6(Cell):
 class Cell7(Cell):
     def stop(self, player):
         player.point-=3000
-
+    def over(self, player):
+        player.other.point-=1000
 class Cell8(Cell):
     def stop(self, player):
-        player.point+=-1000
+        player.point-=5000
+    def over(self, player):
+        player.point+=1000
 
 class Cell9(Cell):
     def stop(self, player):
@@ -135,19 +138,23 @@ class Cell9(Cell):
 
 class Cell10(Cell):
     def stop(self, player):
-        player.point+=-1000
+        player.point+=10000
+    def over(self, player):
+        player.point-=5000
 
 class Cell11(Cell):
     def stop(self, player):
-        player.point=player.other.point
-
+        player.point+=player.other.point
+    
 class Cell12(Cell):
     def stop(self, player):
-        player.point-=-4000
+        player.point-=4000
+    def over(self, player):
+        player.point+=2000
 
 class Cell13(Cell):
     def stop(self, player):
-        if player.input_YN("y/n")=="y":
+        if player.point>=10000:
             player.point-=1000
         else:
             player.point+=10000
