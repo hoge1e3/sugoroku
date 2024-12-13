@@ -24,7 +24,7 @@ class StateGateCell(Cell):
         self.x=0
         self.y=0
     def fields(self):
-        return f"gate={self.gate}"
+        return f"x={self.x} y={self.y} gate={self.gate}"
 
 class GateCell1(GateCell):
     def stop(self, player):
@@ -87,10 +87,10 @@ class GateCell7(StateGateCell):
         if self.gate=="open":
             if player.x>10:
                 player.win=1
-        elif self.y>25:
-                self.gate="open"
     def over(self, player):
         self.y+=player.y
+        if self.y > 25:
+            self.gate = "open"
 
 
 
@@ -297,6 +297,12 @@ class cell40(StateCell):#gate7
     def over(self, player):
         self.x*=-1
         self.y*=-1
+
+class cell41(StateCell):
+    def stop(self, player):
+        player.x+=self.x
+    def over(self, player):
+        self.x+=1
 
 class cell50(StateCell):
     def stop(self, player):
