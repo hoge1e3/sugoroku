@@ -297,8 +297,8 @@ class Cell39(StateCell):#gate7
         self.y=player.y
         player.y=0
     def over(self, player):
-        player.y+=self.y
-        self.y-=1
+        self.y += 1
+        player.y-=1
 class Cell40(StateCell):#gate7
     def stop(self, player):
         player.x+=self.x
