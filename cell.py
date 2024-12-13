@@ -7,7 +7,6 @@ class Cell:
         global cell_ID
         cell_ID += 1
         self.number = cell_ID
-        self.gate="close"
     def __str__(self):
         return "{}番のマス".format(self.number)
 
@@ -15,8 +14,12 @@ class Cell:
         pass
     def over(self, player):
         pass
+class GateCell(Cell):
+    def __init__(self):
+        super().__init__()
+        self.gate="close"
 
-class GateCell1(Cell):
+class GateCell1(GateCell):
     def stop(self, player):
         if (player.point>=12000 or
                 player.point<=-12000):
@@ -26,7 +29,7 @@ class GateCell1(Cell):
     def over(self,player):
         if player.point>=50000:
             player.win=1
-class GateCell2(Cell):
+class GateCell2(GateCell):
     def stop(self, player):
         if player.point>15000:
             player.win=1
@@ -35,7 +38,7 @@ class GateCell2(Cell):
     def over(self,player):
         if player.point>=50000:
             player.win=1
-class GateCell3(Cell):
+class GateCell3(GateCell):
     def stop(self, player):
         if player.point>10000:
             player.win=1
@@ -44,7 +47,7 @@ class GateCell3(Cell):
     def over(self,player):
         if player.point>=50000:
             player.win=1
-class GateCell4(Cell):
+class GateCell4(GateCell):
     def stop(self, player):#check
         if player.x*player.point>10000:
             player.win = 1
@@ -53,7 +56,7 @@ class GateCell4(Cell):
     def over(self,player):
         if player.x*player.point>=500000:
             player.win=1
-class GateCell5(Cell):
+class GateCell5(GateCell):
     def stop(self, player):
         if int((player.point*player.x)/1000)%2!=0:
            player.win = 1
@@ -62,7 +65,7 @@ class GateCell5(Cell):
     def over(self,player):
         if player.point>=50000:
             player.win=1
-class GateCell6(Cell):
+class GateCell6(GateCell):
     def stop(self, player):
         if player.point>10000:
             player.win=1
@@ -72,7 +75,7 @@ class GateCell6(Cell):
         if player.point>=50000:
             player.win=1
 
-class GateCell7(Cell):
+class GateCell7(GateCell):
     def stop(self, player):
         if self.gate=="open":
             if player.x>10:
@@ -280,6 +283,13 @@ class cell39(StateCell):#gate7
     def over(self, player):
         player.y+=self.y
         self.y-=1
+class cell40(Cell):#gate7
+    def stop(self, player):
+        player.x+=self.x
+        player.y+=self.y
+    def over(self, player):
+        self.x*=-1
+        self.y*=-1
 
 class cell50(StateCell):
     def stop(self, player):
