@@ -134,7 +134,9 @@ class Cell8(Cell):
 
 class Cell9(Cell):
     def stop(self, player):
-        player.point-=-2000
+        player.point-=2000
+    def over(self, player):
+        player.other.point-=2000
 
 class Cell10(Cell):
     def stop(self, player):
@@ -145,7 +147,7 @@ class Cell10(Cell):
 class Cell11(Cell):
     def stop(self, player):
         player.point+=player.other.point
-    
+
 class Cell12(Cell):
     def stop(self, player):
         player.point-=4000
