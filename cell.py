@@ -19,6 +19,8 @@ class GateCell(Cell):
     def __init__(self):
         super().__init__()
         self.gate="close"
+    def fields(self):
+        return f"gate={self.gate}"
 
 class GateCell1(GateCell):
     def stop(self, player):
