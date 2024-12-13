@@ -94,131 +94,131 @@ class GateCell7(StateGateCell):
 
 
 
-class cell1(Cell):
+class Cell1(Cell):
     def stop(self, player):
         player.point+=1000
 
 
-class cell2(Cell):
+class Cell2(Cell):
     def stop(self, player):
         player.point-=1000
 
 
-class cell3(Cell):
+class Cell3(Cell):
     def stop(self, player):
         player.point+=3000
 
 
-class cell4(Cell):
+class Cell4(Cell):
     def stop(self, player):
         player.point+=4000
 
-class cell5(Cell):
+class Cell5(Cell):
     def stop(self, player):
         player.point+=5000
 
-class cell6(Cell):
+class Cell6(Cell):
     def stop(self, player):
         player.point*=2
 
-class cell7(Cell):
+class Cell7(Cell):
     def stop(self, player):
         player.point-=3000
 
-class cell8(Cell):
+class Cell8(Cell):
     def stop(self, player):
         player.point+=-1000
 
-class cell9(Cell):
+class Cell9(Cell):
     def stop(self, player):
         player.point-=-2000
 
-class cell10(Cell):
+class Cell10(Cell):
     def stop(self, player):
         player.point+=-1000
 
-class cell11(Cell):
+class Cell11(Cell):
     def stop(self, player):
         player.point=player.other.point
 
-class cell12(Cell):
+class Cell12(Cell):
     def stop(self, player):
         player.point-=-4000
 
-class cell13(Cell):
+class Cell13(Cell):
     def stop(self, player):
         if player.input_YN("y/n")=="y":
             player.point-=1000
         else:
             player.point+=10000
 
-class cell14(Cell):
+class Cell14(Cell):
     def stop(self,player):
         player.x+=int(player.point/1000)
 
-class cell15(Cell):
+class Cell15(Cell):
     def stop(self,player):
         player.other.point-=player.x*1000
 
-class cell16(Cell):
+class Cell16(Cell):
     def stop(self,player):
         player.other.point-=1000
 
-class cell17(Cell):
+class Cell17(Cell):
     def stop(self, player):
         player.point+=player.x*2000
 
-class cell18(Cell):
+class Cell18(Cell):
     def stop(self, player):
         player.point+=1500*player.x
-class cell19(Cell):
+class Cell19(Cell):
     def stop(self, player):
         player.other.point-=1000*player.x
 
-class cell20(Cell):
+class Cell20(Cell):
     def stop(self, player):
         player.other.x+=4
 
-class cell21(Cell):
+class Cell21(Cell):
     def stop(self, player):
         player.point+=1000*player.x
 
-class cell22(Cell):
+class Cell22(Cell):
     def stop(self,player):
         player.x+=player.other.x
 
-class cell23(Cell):
+class Cell23(Cell):
     def stop(self, player):
         if player.x%2==0:
             player.point+=5000
 
-class cell24(Cell):
+class Cell24(Cell):
     def stop(self, player):
         player.other.x+=player.x
 
-class cell25(Cell):
+class Cell25(Cell):
     def stop(self, player):
         if player.x%3==0:
             player.point+=player.other.point
 
-class cell26(Cell):
+class Cell26(Cell):
     def stop(self, player):
         p=player.other.point
         player.other.point=p
 
-class cell27(Cell):
+class Cell27(Cell):
     def stop(self, player):
         if player.x%2!=0:
             player.x+=10
-class cell28(Cell):
+class Cell28(Cell):
     def stop(self, player):
         player.other.x-=int(player.point/1000)
 
-class cell29(Cell):
+class Cell29(Cell):
     def stop(self, player):
         player.point+=2000*player.x
 
-class cell30(Cell):
+class Cell30(Cell):
     def stop(self,player):
         player.x+=3
 
@@ -230,14 +230,14 @@ class StateCell(Cell):
     def fields(self):
         return f"x={self.x} y={self.y}"
     
-class cell31(StateCell):
+class Cell31(StateCell):
     def stop(self, player):
         player.point+=self.y*1000
         self.y=0
     def over(self,player):
         self.y+=1
 
-class cell32(StateCell):
+class Cell32(StateCell):
     def stop(self, player):
         player.point+=self.y
         self.y=0
@@ -246,51 +246,51 @@ class cell32(StateCell):
         self.y+=1000
 
 
-class cell33(StateCell):
+class Cell33(StateCell):
     def stop(self, player):
         self.y+=1000
         player.point+=self.y
 
-class cell34(StateCell):
+class Cell34(StateCell):
     def stop(self, player):
         player.other.cell.y=1
 
-class cell35(StateCell):#GateCell7
+class Cell35(StateCell):#GateCell7
     def stop(self, player):
         player.y+=self.y
         self.y=0
     def over(self, player):
         self.y+=1
 
-class cell36(StateCell):#GateCell7
+class Cell36(StateCell):#GateCell7
     def stop(self,player):
         player.x+=self.x
     def over(self, player):
         self.x+=1
         player.x-=1
 
-class cell37(StateCell):#Gate7
+class Cell37(StateCell):#Gate7
     def stop(self, player):
         x = self.x
         self.x = player.x
         player.x = x
     def over(self, player):
         self.x-=1
-class cell38(StateCell):#gate7
+class Cell38(StateCell):#gate7
     def stop(self, player):
         if self.x%2==0:
             player.x+=5
     def over(self, player):
         self.x+=1
 
-class cell39(StateCell):#gate7
+class Cell39(StateCell):#gate7
     def stop(self, player):
         self.y=player.y
         player.y=0
     def over(self, player):
         player.y+=self.y
         self.y-=1
-class cell40(StateCell):#gate7
+class Cell40(StateCell):#gate7
     def stop(self, player):
         player.x+=self.x
         player.y+=self.y
@@ -298,13 +298,13 @@ class cell40(StateCell):#gate7
         self.x*=-1
         self.y*=-1
 
-class cell41(StateCell):
+class Cell41(StateCell):
     def stop(self, player):
         player.x+=self.x
     def over(self, player):
         self.x+=1
 
-class cell50(StateCell):
+class Cell50(StateCell):
     def stop(self, player):
         self.x+=1
         if self.x>=3:
