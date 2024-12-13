@@ -279,7 +279,7 @@ class cell37(StateCell):#Gate7
 class cell38(StateCell):#gate7
     def stop(self, player):
         if self.x%2==0:
-          player.x+=5
+            player.x+=5
     def over(self, player):
         self.x+=1
 
