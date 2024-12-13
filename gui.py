@@ -56,6 +56,8 @@ class BoardWindow:
             sleep(0.05)
         return res
     def do_seldir(self,d):
+        if self.dir_buttons[d]["state"]==tk.DISABLED:
+            return
         self.dir_status=d
         self.disable_dirs()
     def disable_dirs(self):

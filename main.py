@@ -263,6 +263,7 @@ def init_players():
 init_players()
 
 def mainRept():
+    global map_file, map
     play_seed=int(time.time()/100)
     if not trial:
         main(play_seed)
@@ -272,6 +273,8 @@ def mainRept():
             sum_turn_count+=main(play_seed)
             play_seed+=100
             init_players()
+            map_file=filelist[mapsel]
+            map=board.load(map_file)
         print("Average turn count",sum_turn_count/trial)
         if board_window: board_window.window.quit()
     exit()
