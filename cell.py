@@ -9,7 +9,8 @@ class Cell:
         self.number = cell_ID
     def __str__(self):
         return "{}番のマス".format(self.number)
-
+    def fields(self):
+        return None
     def stop(self, player):
         pass
     def over(self, player):
@@ -211,6 +212,10 @@ class cell29(Cell):
     def stop(self, player):
         player.point+=2000*player.x
 
+class cell30(Cell):
+    def stop(self,player):
+        player.x+=3
+
 class StateCell(Cell):
     def __init__(self):
         super().__init__()
@@ -219,10 +224,6 @@ class StateCell(Cell):
     def fields(self):
         return f"x={self.x} y={self.y}"
     
-class cell30(StateCell):
-    def stop(self,player):
-        player.x+=3
-
 class cell31(StateCell):
     def stop(self, player):
         player.point+=self.y*1000

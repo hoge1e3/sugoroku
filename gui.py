@@ -150,8 +150,9 @@ class BoardWindow:
         source.grid(row=0,column=0)       
         players=tk.Label(gcell, text="players", font=font)
         #    borderwidth=1, relief=tk.SOLID , justify="left")
-        if "fields" in cell.__dict__:
-            fields = tk.Label(gcell, font=font, text=cell.fields(),
+        fld=cell.fields()
+        if fld!=None:
+            fields = tk.Label(gcell, font=font, text=fld,
                 borderwidth=1, relief=tk.SOLID , justify="left")
             fields.grid(row=1, column=0)
             players.grid(row=2,column=0)
