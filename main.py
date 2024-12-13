@@ -187,9 +187,11 @@ def gen_map(level):
     main_route = [
     ]
     _cellClasses=normalCellClasses if level==1 else middleCellClasses
+    _cellClasses=list(_cellClasses)
+    random.shuffle(_cellClasses)
     _gateCellClasses=gateCellClasses if level==1 else middleGateCellClasses 
     for i in range(13):
-        main_route.append(selectFrom(_cellClasses))
+        main_route.append(_cellClasses.pop(0)())
     i=random.randint(0,12)
     main_route[i]=selectFrom(_gateCellClasses)
     for i in range(len(main_route)):
