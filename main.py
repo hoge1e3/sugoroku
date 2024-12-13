@@ -272,7 +272,6 @@ def mainRept():
             sum_turn_count+=main(play_seed)
             play_seed+=100
             init_players()
-            map_file=filelist[mapsel]
             map=board.load(map_file)
         print("Average turn count",sum_turn_count/trial)
         if board_window: board_window.window.quit()
