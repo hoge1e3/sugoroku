@@ -7,6 +7,7 @@ for n in dir(cell):
     if re.match(r"(Gate)?[Cc]ell\d+",n ):
         cl=cell.__getattribute__(n)
         n2c[n]=cl
+        n2c[n.lower()]=cl
         #print (n, cl, cl.__name__)
 
 def conv(e):
