@@ -294,8 +294,8 @@ class Cell38(StateCell):#gate7
 
 class Cell39(StateCell):#gate7
     def stop(self, player):
-        self.y=player.y
-        player.y=0
+        player.y += self.y
+        self.y=0
     def over(self, player):
         self.y += 1
         player.y-=1
