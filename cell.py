@@ -314,8 +314,117 @@ class Cell41(StateCell):
     def over(self, player):
         self.x+=1
 
+class GateCell8(StateGateCell):
+    def stop(self, player):
+        if self.gate=="open":
+            player.win=1
+        else:
+            self.over(player)
+    def over(self, player):
+        self.x+=player.point
+        player.point=0
+        if self.x > 100000:
+            self.gate="open"
+
 class Cell50(StateCell):
     def stop(self, player):
+        if self.x>=30:
+            player.point+=500000
+            self.x = 0
+        elif self.x>=10:
+            player.point+=10000
+            self.x = 0
+    def over(self, player):
+        self.x+=5
+class Cell51(StateCell):
+    def stop(self, player):
+        self.x*=-1
+    def over(self, player):
+        player.point+=1000*self.x
+
+class Cell52(StateCell):
+    def stop(self, player):
+        player.point+=1000*self.x
+    def over(self, player):
+        self.x*=-1
+class Cell53(StateCell):
+    def stop(self, player):
+        self.x*=-2
+        self.over(player.other)
+    def over(self, player):
+        player.point+=self.x*1000
+
+class Cell54(StateCell):
+    def stop(self, player):
+        player.point+=self.y*1000
+        self.y=0
+    def over(self, player):
+        player.y=-1
+        self.y+=1
+class Cell55(StateCell):
+    def stop(self, player):
+        d=player.point-player.other.point
+        if d<0:
+            a=player.point
+            player.point=player.other.point
+            player.other.point=a
+class Cell56(StateCell):
+    def stop(self, player):
+        player.point+=self.x*2*1000
+    def over(self, player):
+        self.x*=-1
+
+class Cell57(StateCell):
+    def stop(self, player):
+        if self.x==0:
+            player.point+=player.other.point
+        elif self.x==1:
+            player.other.point+=player.point
+        elif self.x==2:
+            a=(player.point+player.other.point)/2
+            player.point=a
+            player.other.point=a
+    def over(self, player):
+        self.x=(self.x+1)%3
+
+
+class Cell60(StateCell):
+    def stop(self, player):
+        player.point+=self.x*2000
+    def over(self,plater):
+        self.x*=-1
+
+class Cell61(StateCell):
+    def stop(self, player):
+        player.point+=self.y*1000
+    def over(self, player):
+        self.y+=1
+
+class Cell62(StateCell):
+    def stop(self, player):
+        if self.x==0:
+            player.x*=2
+        elif self.x==1:
+            player.other.x*=2
+        elif self.x==2:
+            player.point+=10000
+            player.other.point+=10000
+    def over(self, player):
+        self.x=(self.x+1)%3
+
+class Cell63(StateCell):
+    def stop(self, player):
+        player.y+=self.y
+        self.y=0
+    def over(self, player):
+        self.y+=3
+
+class Cell64(StateCell):
+    def stop(self, player):
+        if self.x%2==0:
+            player.point+=self.y*1000
+        else:
+           self.y+=1
+    def over(self, player):
         self.x+=1
-        if self.x>=3:
-            player.point+=5000
+

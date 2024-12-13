@@ -174,22 +174,30 @@ normalCellClasses=[
 middleCellClasses=[
     Cell14,Cell15,Cell16,Cell17,Cell18,Cell19,Cell20,Cell21,Cell22,Cell23,Cell24,Cell25,Cell26,Cell27,Cell28,Cell29,Cell30,Cell30,Cell30,Cell50,Cell31
 ]
+stateCellClasses=[
+    Cell35,Cell35,Cell36,Cell36,Cell37,Cell37,Cell38,Cell38,Cell39,Cell39,Cell40,Cell40,Cell41,Cell41
+]
 gateCellClasses=[
     GateCell1,GateCell2,GateCell3,
 ]
 middleGateCellClasses=[
     GateCell4,GateCell5,GateCell6
 ]
+
+stateGateCellClasses=[
+    GateCell7
+]
+
 def selectFrom(cellClasses):
     i=random.randint(0, len(cellClasses)-1)
     return cellClasses[i]()
 def gen_map(level):
     main_route = [
     ]
-    _cellClasses=normalCellClasses if level==1 else middleCellClasses
+    _cellClasses=normalCellClasses if level==1  else middleCellClasses if level==2 else stateCellClasses
     _cellClasses=list(_cellClasses)
     random.shuffle(_cellClasses)
-    _gateCellClasses=gateCellClasses if level==1 else middleGateCellClasses 
+    _gateCellClasses=gateCellClasses if level==1 else middleGateCellClasses if level==2 else stateGateCellClasses
     for i in range(13):
         main_route.append(_cellClasses.pop(0)())
     i=random.randint(0,12)
@@ -215,7 +223,7 @@ mapsel=-1
 while not (0<=mapsel<len(filelist)):
     mapsel=int(input(f"マップを選択してください (0-{len(filelist)-1})?"))
 if mapsel==0:
-    level=int(input("Levelを選択してください\n1：初級\n2: 中級\n"))
+    level=int(input("Levelを選択してください\n1：初級\n2: 中級\n3: 上級"))
     map=gen_map(level)
     map_file=board.save(map, str(level))
 else:
