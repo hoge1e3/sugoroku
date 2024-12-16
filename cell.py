@@ -213,7 +213,8 @@ class Cell25(Cell):
 class Cell26(Cell):
     def stop(self, player):
         p=player.other.point
-        player.other.point=p
+        player.other.point=player.point
+        player.point=p
 
 class Cell27(Cell):
     def stop(self, player):
