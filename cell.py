@@ -56,7 +56,7 @@ class GateCell3(GateCell):
             player.win=1
 class GateCell4(GateCell):
     def stop(self, player):#check
-        if player.x*player.point>10000:
+        if player.x*player.point>100000:
             player.win = 1
         else:
             player.x+=1
@@ -65,8 +65,8 @@ class GateCell4(GateCell):
             player.win=1
 class GateCell5(GateCell):
     def stop(self, player):
-        if int((player.point*player.x)/1000)%2!=0:
-           player.win = 1
+        if player.point:
+            player.win = 1
         else:
             player.x+=1
     def over(self,player):
