@@ -65,7 +65,7 @@ class GateCell4(GateCell):
             player.win=1
 class GateCell5(GateCell):
     def stop(self, player):
-        if player.point:
+        if player.point>=15000:
             player.win = 1
         else:
             player.x+=1
