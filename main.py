@@ -75,6 +75,7 @@ class Player:
         #if len(candidates)==1:
         #    return candidates[0]
         if not self.human:
+            sleep2(0.2)
             return candidates[random.randint(0,len(candidates)-1)]
         candNames=list(dir2name(c) for c in candidates)
         return name2dir(board_window.seldir(candNames))
@@ -84,7 +85,7 @@ class Player:
         self.pos=add_dir(self.pos, self.dir)
         if board_window:
             board_window.drawPlayer(self)
-            sleep2(0.2)
+            
     @property
     def cell(self):
         return cell_at(self.pos)
@@ -133,6 +134,8 @@ def steps(p, p_step):
         if board_window: board_window.setDiceLeft(i-1)
         print(p.cell.number)
         p.cell.over(p)
+        if p.win:
+            return
     if board_window: board_window.setDiceLeft(1)
     p.step()
     print(p.cell,"に止まりました")
