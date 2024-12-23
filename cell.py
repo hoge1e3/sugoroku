@@ -209,9 +209,9 @@ class Cell23(Cell):
 
 class Cell24(Cell):
     def stop(self, player):
-        player.other.x+=player.x
+        player.point*=3
     def over(self,player):
-        player.other.point+=5000
+        player.point-=10000
 
 class Cell25(Cell):
     def stop(self, player):
@@ -372,7 +372,7 @@ class Cell54(StateCell):
     def over(self, player):
         player.y=-1
         self.y+=1
-class Cell55(StateCell):
+class Cell55(Cell):
     def stop(self, player):
         d=player.point-player.other.point
         if d<0:
