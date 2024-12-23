@@ -102,7 +102,7 @@ class Cell1(Cell):
 
 class Cell2(Cell):
     def stop(self, player):
-        player.point-=1000
+        player.point-=2000
 
 
 class Cell3(Cell):
