@@ -34,7 +34,8 @@ class GateCell1(GateCell):
         else:
             player.x+=1
     def over(self,player):
-        if player.point>=50000:
+        if (player.point>=24000 or
+                player.point<=-24000):
             player.win=1
 class GateCell2(GateCell):
     def stop(self, player):
