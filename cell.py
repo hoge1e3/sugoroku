@@ -437,7 +437,7 @@ class Cell64(StateCell):
         if self.x%2==0:
             player.point+=self.y*1000
         else:
-           self.y+=1
+            self.y+=1
     def over(self, player):
         self.x+=1
 
