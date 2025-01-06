@@ -1,0 +1,64 @@
+[
+  [
+    {
+      "class": "Cell19",
+      "number": 1
+    },
+    {
+      "class": "Cell30",
+      "number": 2
+    },
+    {
+      "class": "Cell50",
+      "number": 3,
+      "x": 4,
+      "y": 5
+    },
+    {
+      "class": "Cell22",
+      "number": 4
+    },
+    {
+      "class": "Cell20",
+      "number": 5
+    }
+  ],
+  [
+    {
+      "class": "Cell18",
+      "number": 6
+    },
+    null,
+    {
+      "class": "Cell30",
+      "number": 7
+    },
+    null,
+    {
+      "class": "Cell30",
+      "number": 8
+    }
+  ],
+  [
+    {
+      "class": "GateCell6",
+      "number": 9
+    },
+    {
+      "class": "Cell16",
+      "number": 10
+    },
+    {
+      "class": "Cell25",
+      "number": 11
+    },
+    {
+      "class": "Cell17",
+      "number": 12
+    },
+    {
+      "class": "Cell21",
+      "number": 13
+    }
+  ]
+]

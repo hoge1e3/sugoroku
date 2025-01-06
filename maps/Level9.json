@@ -1,0 +1,81 @@
+[
+  [
+    {
+      "class": "Cell63",
+      "number": 1,
+      "x": 1,
+      "y": 0
+    },
+    {
+      "class": "Cell21",
+      "number": 2
+    },
+    {
+      "class": "Cell60",
+      "number": 3,
+      "x": 0,
+      "y": 3
+    },
+    {
+      "class": "Cell66",
+      "number": 4,
+      "x": 1,
+      "y": 4
+    },
+    {
+      "class": "Cell61",
+      "number": 5,
+      "x": 3,
+      "y": 4
+    }
+  ],
+  [
+    {
+      "class": "Cell63",
+      "number": 6,
+      "x": 0,
+      "y": 4
+    },
+    null,
+    {
+      "class": "Cell19",
+      "number": 7
+    },
+    null,
+    {
+      "class": "GateCell8",
+      "gate": "close",
+      "number": 8,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  [
+    {
+      "class": "Cell18",
+      "number": 9
+    },
+    {
+      "class": "Cell21",
+      "number": 10
+    },
+    {
+      "class": "Cell65",
+      "number": 11,
+      "x": 4,
+      "y": 5
+    },
+    {
+      "class": "Cell60",
+      "number": 12,
+      "x": 5,
+      "y": 0
+    },
+    {
+      "class": "Cell65",
+      "number": 13,
+      "x": 1,
+      "y": 5
+    }
+  ]
+]
