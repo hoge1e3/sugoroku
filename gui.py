@@ -146,7 +146,7 @@ class BoardWindow:
         for p in self.players:
             if p==turn:
                 self.status["text"]+="*"
-            self.status["text"]+=f"[{p.name} point={p.point} x={p.x} y={p.y}]  "
+            self.status["text"]+=f"[{p.name} point= {p.point} x={p.x} y={p.y}]  "
     def showCell(self, cell, x,y):
         font=("Courier New", "9")
         text=getsource(type(cell))
